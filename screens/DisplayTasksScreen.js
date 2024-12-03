@@ -9,6 +9,7 @@ import { seeStoredData } from './functions/SeeDataBtn';
 import { clearStorage } from './functions/ClearHistoryBtn';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
+import ThreeDots from './components/ThreeDots';
 
 export const buttonPropsContext = createContext();
 
@@ -51,7 +52,6 @@ const DisplayTasksScreen = () => {
         
         // we can call taskAdded action for each task in loaded data
         // setTasks(loadedData);
-        /*
         loadedData.forEach(obj => dispatch({
           type: "taskAdded",
           payload: {
@@ -59,7 +59,6 @@ const DisplayTasksScreen = () => {
             id : obj.id
           }
         }))
-          */
 
       } catch (error) {
         console.error("Error in loading data : ",error);
@@ -72,7 +71,9 @@ const DisplayTasksScreen = () => {
 
   return (
     <SafeAreaView>
-      <View style={styles.top_bar}/>
+      <View style={styles.top_bar}>
+        <ThreeDots />
+      </View>
       <ScrollView>
       <buttonPropsContext.Provider value = {{setIdOfUpdatingData, setUpdateMode, setTask}}>
       {tasks.map( (item) => {
@@ -119,7 +120,8 @@ const styles = StyleSheet.create({
         fontWeight: 500
     },
     top_bar : {
-      backgroundColor: "black",
-      height: 25
+      height: 25,
+      display: 'flex',
+      alignItems: 'flex-end'
     }
 });
