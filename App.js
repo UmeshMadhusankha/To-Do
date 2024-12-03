@@ -1,12 +1,47 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import TaskAddingScreen from './screens/TaskAddingScreen';
+import StatisticsScreen from './screens/StatisticsScreen';
+import DisplayTasksScreen from './screens/DisplayTasksScreen';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Entypo from 'react-native-vector-icons/Entypo';
+import { Provider } from 'react-redux';
+import store from './redux/store';
+
+const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Tab.Navigator 
+          screenOptions={{
+            tabBarInactiveBackgroundColor: "#eee",
+            tabBarInactiveTintColor: "#000",
+            tabBarActiveBackgroundColor: "cyan",
+            tabBarActiveTintColor: "#000",
+            headerShown: false,
+          }}
+        >
+          <Tab.Screen name="To-Do" component={DisplayTasksScreen} 
+            options={{
+              tabBarIcon: ({ size , color }) => <MaterialCommunityIcons name='format-list-checks' size={size} color={color}/>
+            }}
+          />
+          <Tab.Screen name="Add Tasks" component={TaskAddingScreen} 
+            options={{
+              tabBarIcon: ({ size , color }) => <MaterialCommunityIcons name='plus-circle-outline' size={size} color={color}/>
+            }}
+          />
+          <Tab.Screen name="Statistics" component={StatisticsScreen} 
+            options={{
+              tabBarIcon: ({ size , color }) => <Entypo name='bar-graph' size={size} color={color}/>
+            }}
+          />
+        </Tab.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
 

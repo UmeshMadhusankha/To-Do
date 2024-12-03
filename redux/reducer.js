@@ -1,0 +1,38 @@
+// let lastId = 0;
+
+export default function reducer(state=[],action) {
+    const today = new Date().toDateString();
+
+    switch (action.type) {
+        case "taskAdded":
+            return [
+                ...state,
+                {
+                    id : action.payload.id,
+                    value : {
+                        task : action.payload.task,
+                        date : today
+                    }
+                }
+            ];
+            
+        case "taskRemoved":
+            return state.filter(row => row.id !== action.payload.id);
+
+        case "taskEdited":
+            return state.map(row => row.id === action.payload.id ? 
+                {...row,
+                    value: {
+                        ...row.value,
+                        task: action.payload.task
+                    }
+                } : row
+            );
+
+        case "tasksCleared":
+            return [];
+            
+        default:
+            return state;
+    }
+}
