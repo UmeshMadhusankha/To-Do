@@ -8,8 +8,12 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Entypo from 'react-native-vector-icons/Entypo';
 import { Provider } from 'react-redux';
 import store from './redux/store';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import TaskStatus from './screens/TaskStatus';
+import DisplayTasksStack from './screens/DisplayTasksStack';
 
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
@@ -24,7 +28,7 @@ export default function App() {
             headerShown: false,
           }}
         >
-          <Tab.Screen name="To-Do" component={DisplayTasksScreen} 
+          <Tab.Screen name="Tasks Stack" component={DisplayTasksStack} 
             options={{
               tabBarIcon: ({ size , color }) => <MaterialCommunityIcons name='format-list-checks' size={size} color={color}/>
             }}

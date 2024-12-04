@@ -14,8 +14,7 @@ const DeleteButton = ({ style, id }) => {
         <MaterialCommunityIcons 
           style={[styles.delete_button, style]}
           name='trash-can' 
-          backgroundColor='#ff1111' 
-          size={40}
+          size={30}
           onPress={() => deleteLogic(id,dispatch)}  
         />
       </TouchableOpacity>

@@ -1,23 +1,20 @@
-import { ScrollView, Text, Pressable, StyleSheet, Button, View } from 'react-native'
+import { ScrollView, Text, StyleSheet, Button, View } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useSharedState } from '../hooks/useSharedState';
 import { useEffect, createContext, Fragment } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DisplayTasks from './components/DisplayTasks';
-import { seeStoredData } from './functions/SeeDataBtn';
-import { clearStorage } from './functions/ClearHistoryBtn';
-import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import ThreeDots from './components/ThreeDots';
 
 export const buttonPropsContext = createContext();
+let firstLoad = true;
 
-const DisplayTasksScreen = () => {
+const DisplayTasksScreen = ({navigation}) => {
+    console.log(firstLoad)
 
     const dispatch = useDispatch();
-
-    const navigation = useNavigation();
 
     const {
       /*
@@ -52,13 +49,17 @@ const DisplayTasksScreen = () => {
         
         // we can call taskAdded action for each task in loaded data
         // setTasks(loadedData);
-        loadedData.forEach(obj => dispatch({
-          type: "taskAdded",
-          payload: {
-            task : obj.value.task,
-            id : obj.id
-          }
-        }))
+        
+        if(firstLoad) {
+          loadedData.forEach(obj => dispatch({
+            type: "taskAdded",
+            payload: {
+              task : obj.value.task,
+              id : obj.id
+            }
+          }))
+          firstLoad = false;
+        }
 
       } catch (error) {
         console.error("Error in loading data : ",error);
@@ -83,12 +84,12 @@ const DisplayTasksScreen = () => {
           return (
             <Fragment key={`date-${item.id}`}>
               <Text>{currRenderingDate}</Text>
-              <DisplayTasks key={item.id} task={item.value.task} id={item.id} />
+              <DisplayTasks key={item.id} task={item.value.task} id={item.id} navigation={navigation}/>
             </Fragment>
           )
         }
         return (
-          <DisplayTasks key={item.id} task={item.value.task} id={item.id} />
+          <DisplayTasks key={item.id} task={item.value.task} id={item.id} navigation={navigation}/>
         );
       })}
       </buttonPropsContext.Provider>

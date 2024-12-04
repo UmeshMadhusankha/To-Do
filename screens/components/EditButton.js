@@ -14,8 +14,7 @@ const EditButton = ({ style, id }) => {
         <MaterialCommunityIcons 
           style={[styles.delete_button, style]}
           name='pen' 
-          backgroundColor='#228B22' 
-          size={40}  
+          size={30}  
           onPress={() => editLogic(id, setTask, setIdOfUpdatingData, setUpdateMode)}
         />
       </TouchableOpacity>

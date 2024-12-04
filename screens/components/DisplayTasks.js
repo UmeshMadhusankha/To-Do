@@ -1,12 +1,17 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React from 'react';
 import DeleteButton from './DeleteButton';
 import EditButton from './EditButton';
 
-const DisplayTasks = ({id, task}) => {
+const DisplayTasks = ({id, task, navigation}) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>{task}</Text>
+      <TouchableOpacity 
+        style={{width: '72%'}}
+        onPress={() => navigation.navigate('Status')}
+      >
+        <Text style={styles.text}>{task}</Text>
+      </TouchableOpacity>
       <View style={styles.button_container}>
         <DeleteButton style={styles.del} id={id}/>
         <EditButton style={styles.edit} id={id}/>
@@ -20,26 +25,27 @@ export default DisplayTasks;
 const styles = StyleSheet.create({
     container: {
         backgroundColor: "#D4F6FF",
-        padding: 10,
+        padding: 8,
         flexDirection: 'row',
-        marginBottom: 5,
+        marginBottom: 3,
         borderRadius: 10
     },
     button_container: {
         height: 'inherit',
         width: '28%',
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'space-evenly',
         alignItems: 'center',
-        padding: 0
+        padding: 0,
     },
     text : {
         padding: 10,
         width: '72%',
-        marginRight: 2
+        marginRight: 2,
+        backgroundColor: 'blue'
     },
     del : {
-        marginRight: 5
+        marginRight: 0
     },
     edit : {
         marginRight: 5
