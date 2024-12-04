@@ -13,7 +13,7 @@
     "@react-navigation/bottom-tabs": "^7.1.2",
     "@react-navigation/native": "^7.0.11",
     "@reduxjs/toolkit": "^2.4.0",
-    "expo": "~52.0.11",
+    "expo": "~52.0.14",
     "expo-status-bar": "~2.0.0",
     "expo-updates": "~0.26.9",
     "react": "18.3.1",

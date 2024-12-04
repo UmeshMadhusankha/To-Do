@@ -92,13 +92,6 @@ const DisplayTasksScreen = () => {
         );
       })}
       </buttonPropsContext.Provider>
-      <Pressable 
-        style={styles.clear_button}
-        onPress={() => clearStorage(dispatch)}
-        >
-        <Text style={styles.button_text}>Clear History</Text>
-      </Pressable>
-      <Button title="See data" onPress={() => {seeStoredData(tasks)}}></Button>
       </ScrollView>
     </SafeAreaView>
   )
