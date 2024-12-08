@@ -11,7 +11,7 @@ export default function reducer(state=[],action) {
                     id : action.payload.id,
                     value : {
                         task : action.payload.task,
-                        date : today
+                        date : action.payload.date
                     }
                 }
             ];

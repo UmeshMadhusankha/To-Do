@@ -55,7 +55,8 @@ const DisplayTasksScreen = ({navigation}) => {
             type: "taskAdded",
             payload: {
               task : obj.value.task,
-              id : obj.id
+              id : obj.id,
+              date: obj.value.date
             }
           }))
           firstLoad = false;
