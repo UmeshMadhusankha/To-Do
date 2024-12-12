@@ -1,21 +1,30 @@
 import { View, Text, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Picker } from '@react-native-picker/picker';
 
 const TaskStatus = ({navigation, route}) => {
 
   const {taskExist} = route.params;
+  const {taskTime} = route.params;
+
+  const [selectedValue,setSelectedValue] = useState(1);
 
   return (
     <SafeAreaView style={styles.status_container}>
       <Text style={[styles.texts, styles.topics]}>Task :</Text>
       <Text style={[styles.texts, styles.task_style]}>{taskExist}</Text>
+      <Text style={[styles.texts, styles.topics]}>Time Allocated :</Text>
+      <Text style={[styles.texts, styles.task_style]}>{taskTime ? `${Math.floor(taskTime / 60)} hours ${taskTime % 60} minutes` : 'Did not set'}</Text>
       <Text style={[styles.texts, styles.topics, styles.status_style]}>Status :</Text>
-      <Picker style={styles.picker}>
-        <Picker.Item label='On Going' value={null} />
-        <Picker.Item label='Completed' value={true} />
-        <Picker.Item label='Failed to Complete' value={false} />
+      <Picker 
+        style={styles.picker}
+        selectedValue={selectedValue}
+        onValueChange={(val) => setSelectedValue(val)}
+      >
+        <Picker.Item label='On Going' value={1} />
+        <Picker.Item label='Completed' value={2} />
+        <Picker.Item label='Failed to Complete' value={3} />
       </Picker>
       <View style={styles.btn_container}>
         <TouchableOpacity 
@@ -51,7 +60,8 @@ const styles = {
   },
   topics: {
     fontWeight: '600',
-    fontSize: 20
+    fontSize: 20,
+    marginTop: 50
   },
   task_style: {
     fontSize: 20

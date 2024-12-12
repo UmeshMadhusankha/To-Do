@@ -13,7 +13,7 @@ export const seeStoredData = async (tasks) => {
       console.log("Stored Data in AsyncStorage:");
       allData.forEach(([key, values]) => {
         const obj = JSON.parse(values);
-          console.log(`Key: ${key}, toDoTask: ${obj.task}, date: ${obj.date}`);
+          console.log(`Key: ${key}, toDoTask: ${obj.task}, date: ${obj.date}, time: ${obj.time}`);
       });
   
       // Log the current tasks state

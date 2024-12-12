@@ -37,13 +37,15 @@ const DisplayTasksScreen = ({navigation}) => {
       try {
         const allKeys = await AsyncStorage.getAllKeys();
         const sortedKeys = allKeys.sort();
-        const allData = await AsyncStorage.multiGet(sortedKeys);
+        // extract only normal tasks
+        const ordinaryTasksKeys = sortedKeys.filter((key) => !isNaN(key));
+        const ordinaryData = await AsyncStorage.multiGet(sortedKeys);
 
-        const loadedData = allData.map(([key,value]) => {
+        const loadedData = ordinaryData.map(([key,value]) => {
           var jsObj = JSON.parse(value);
           return {
             id : key, 
-            value : {task: jsObj.task, date: jsObj.date}
+            value : {task: jsObj.task, date: jsObj.date, time: jsObj.time}
           }
         });
         
@@ -56,7 +58,8 @@ const DisplayTasksScreen = ({navigation}) => {
             payload: {
               task : obj.value.task,
               id : obj.id,
-              date: obj.value.date
+              date: obj.value.date,
+              time: obj.value.time
             }
           }))
           firstLoad = false;
@@ -84,8 +87,8 @@ const DisplayTasksScreen = ({navigation}) => {
           currRenderingDate = item.value.date;
           return (
             <Fragment key={`date-${item.id}`}>
-              <Text>{currRenderingDate}</Text>
-              <DisplayTasks key={item.id} task={item.value.task} id={item.id} navigation={navigation}/>
+              <Text style={styles.day}>{currRenderingDate}</Text>
+              <DisplayTasks key={item.id} task={item.value.task} time={item.value.time} id={item.id} navigation={navigation}/>
             </Fragment>
           )
         }
@@ -102,6 +105,10 @@ const DisplayTasksScreen = ({navigation}) => {
 export default DisplayTasksScreen
 
 const styles = StyleSheet.create({
+  day: {
+    fontWeight: 500,
+    fontSize: 20
+  },
     clear_button : {
       backgroundColor: 'red',
       borderRadius: 10,

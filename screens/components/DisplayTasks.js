@@ -3,12 +3,12 @@ import React from 'react';
 import DeleteButton from './DeleteButton';
 import EditButton from './EditButton';
 
-const DisplayTasks = ({id, task, navigation}) => {
+const DisplayTasks = ({id, task, time, navigation}) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity 
         style={{width: '72%'}}
-        onPress={() => navigation.navigate('Status', {taskExist : task})}
+        onPress={() => navigation.navigate('Status', {taskExist : task, taskTime : time})}
       >
         <Text style={styles.text}>{task}</Text>
       </TouchableOpacity>
@@ -42,7 +42,6 @@ const styles = StyleSheet.create({
         padding: 10,
         width: '72%',
         marginRight: 2,
-        backgroundColor: 'blue'
     },
     del : {
         marginRight: 0
