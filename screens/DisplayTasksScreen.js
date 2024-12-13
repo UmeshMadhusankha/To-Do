@@ -89,7 +89,7 @@ const DisplayTasksScreen = ({navigation}) => {
           return (
             <Fragment key={`date-${item.id}`}>
               <Text style={styles.day}>{currRenderingDate}</Text>
-              <DisplayTasks key={item.id} task={item.value.task} time={item.value.time} id={item.id} navigation={navigation}/>
+              <DisplayTasks key={item.id} task={item.value.task} time={item.value.time} id={item.id} status={item.value.status} navigation={navigation}/>
             </Fragment>
           )
         }

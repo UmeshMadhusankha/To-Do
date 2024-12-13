@@ -9,9 +9,11 @@ const TaskStatus = ({navigation, route}) => {
 
   const {taskExist} = route.params;
   const {taskTime} = route.params;
-  const {id} = route.params;
+  const {taskId} = route.params;
+  const {taskStatus} = route.params;
 
-  const [selectedValue,setSelectedValue] = useState(1);
+  const valOnLoadForSelected = taskStatus ? taskStatus : 1;
+  const [selectedValue,setSelectedValue] = useState(valOnLoadForSelected);
   const dispatch = useDispatch();
 
   // need to update async storage and redux store upon a picker value change
@@ -20,7 +22,7 @@ const TaskStatus = ({navigation, route}) => {
     dispatch({
       type: "taskStatusUpdated",
       payload: {
-        id : id,
+        id : taskId,
         status : selectedValue
       }
     })
@@ -28,11 +30,11 @@ const TaskStatus = ({navigation, route}) => {
     // async storage update
     const updateAsyncStorage = async () => {
       try {
-        const currData = await AsyncStorage.getItem(id);
+        const currData = await AsyncStorage.getItem(taskId);
         const currDataObj = JSON.parse(currData);
         const updatedData = { ...currDataObj, status: selectedValue };
         const updatedDataJson = JSON.stringify(updatedData);
-        await AsyncStorage.setItem(id, updatedDataJson);
+        await AsyncStorage.setItem(taskId, updatedDataJson);
       } catch (error) {
         console.error("Error updating AsyncStorage:", error);
       }
