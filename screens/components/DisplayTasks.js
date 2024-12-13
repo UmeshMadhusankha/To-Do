@@ -8,7 +8,7 @@ const DisplayTasks = ({id, task, time, navigation}) => {
     <View style={styles.container}>
       <TouchableOpacity 
         style={{width: '72%'}}
-        onPress={() => navigation.navigate('Status', {taskExist : task, taskTime : time})}
+        onPress={() => navigation.navigate('Status', {taskExist : task, taskTime : time, id : id})}
       >
         <Text style={styles.text}>{task}</Text>
       </TouchableOpacity>

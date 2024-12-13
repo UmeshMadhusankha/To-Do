@@ -36,7 +36,7 @@ export default function reducer(state=[],action) {
                 {...row,
                     value: {
                         ...row.value,
-                        status: action
+                        status: action.payload.status
                     }
                 } : row
             );

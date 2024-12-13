@@ -1,17 +1,46 @@
 import { View, Text, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Picker } from '@react-native-picker/picker';
+import { useDispatch } from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const TaskStatus = ({navigation, route}) => {
 
   const {taskExist} = route.params;
   const {taskTime} = route.params;
+  const {id} = route.params;
 
   const [selectedValue,setSelectedValue] = useState(1);
+  const dispatch = useDispatch();
 
   // need to update async storage and redux store upon a picker value change
+  useEffect(() => {
+    // redux store update
+    dispatch({
+      type: "taskStatusUpdated",
+      payload: {
+        id : id,
+        status : selectedValue
+      }
+    })
+
+    // async storage update
+    const updateAsyncStorage = async () => {
+      try {
+        const currData = await AsyncStorage.getItem(id);
+        const currDataObj = JSON.parse(currData);
+        const updatedData = { ...currDataObj, status: selectedValue };
+        const updatedDataJson = JSON.stringify(updatedData);
+        await AsyncStorage.setItem(id, updatedDataJson);
+      } catch (error) {
+        console.error("Error updating AsyncStorage:", error);
+      }
+    };
   
+    updateAsyncStorage();
+
+  },[selectedValue]);
 
   return (
     <SafeAreaView style={styles.status_container}>
