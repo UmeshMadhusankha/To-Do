@@ -45,7 +45,7 @@ const DisplayTasksScreen = ({navigation}) => {
           var jsObj = JSON.parse(value);
           return {
             id : key, 
-            value : {task: jsObj.task, date: jsObj.date, time: jsObj.time}
+            value : {task: jsObj.task, date: jsObj.date, time: jsObj.time, status: jsObj.status}
           }
         });
         
@@ -59,7 +59,8 @@ const DisplayTasksScreen = ({navigation}) => {
               task : obj.value.task,
               id : obj.id,
               date: obj.value.date,
-              time: obj.value.time
+              time: obj.value.time,
+              status: obj.value.status
             }
           }))
           firstLoad = false;

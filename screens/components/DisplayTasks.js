@@ -2,10 +2,17 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React from 'react';
 import DeleteButton from './DeleteButton';
 import EditButton from './EditButton';
+import { useSelector } from 'react-redux';
 
 const DisplayTasks = ({id, task, time, navigation}) => {
+
+  const tasks = useSelector((state) => state.tasks);
+  const thisTask = tasks.find((row) => row.id === id);
+  const thisTaskStatus = thisTask.value.status;
+  const relevantStyle = 'container' + thisTaskStatus;
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, styles[relevantStyle]]}>
       <TouchableOpacity 
         style={{width: '72%'}}
         onPress={() => navigation.navigate('Status', {taskExist : task, taskTime : time, id : id})}
@@ -30,6 +37,9 @@ const styles = StyleSheet.create({
         marginBottom: 3,
         borderRadius: 10
     },
+    container1: {backgroundColor: "rgba(0, 255, 255, 0.1)"},
+    container2 : {backgroundColor: "rgba(0, 255, 0, 0.3)"},
+    container3: {backgroundColor: "rgba(255, 0, 0, 0.3)"},
     button_container: {
         height: 'inherit',
         width: '28%',

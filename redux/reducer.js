@@ -13,7 +13,7 @@ export default function reducer(state=[],action) {
                         task : action.payload.task,
                         date : action.payload.date,
                         time : action.payload.time,
-                        status : 1
+                        status : action.payload.status
                     }
                 }
             ];
