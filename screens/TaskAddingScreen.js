@@ -41,7 +41,7 @@ const TaskAddingScreen = () => {
           // finding date
           const today = new Date().toDateString();
           const timeInMins = parseInt(hours) * 60 + parseInt(minutes);
-          const valAsJson = JSON.stringify({'task' : task, 'date' : today, 'time' : timeInMins});
+          const valAsJson = JSON.stringify({'task' : task, 'date' : today, 'time' : timeInMins, 'status' : 1});
 
           // storing data 
           await AsyncStorage.setItem(`${nextKey}`, valAsJson);

@@ -10,6 +10,9 @@ const TaskStatus = ({navigation, route}) => {
 
   const [selectedValue,setSelectedValue] = useState(1);
 
+  // need to update async storage and redux store upon a picker value change
+  
+
   return (
     <SafeAreaView style={styles.status_container}>
       <Text style={[styles.texts, styles.topics]}>Task :</Text>
