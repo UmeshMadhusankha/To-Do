@@ -31,6 +31,16 @@ export default function reducer(state=[],action) {
                 } : row
             );
 
+        case "taskStatusUpdated":
+            return state.map(row => row.id === action.payload.id ?
+                {...row,
+                    value: {
+                        ...row.value,
+                        status: action
+                    }
+                } : row
+            );
+
         case "tasksCleared":
             return [];
             
