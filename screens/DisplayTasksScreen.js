@@ -9,13 +9,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import ThreeDots from './components/ThreeDots';
 
 export const buttonPropsContext = createContext();
-let firstLoad = true;
 
 const DisplayTasksScreen = ({navigation}) => {
-    console.log(firstLoad)
-
-    const dispatch = useDispatch();
-
+    
     const {
       /*
         tasks,
@@ -32,48 +28,7 @@ const DisplayTasksScreen = ({navigation}) => {
     // set a date that never can be the same ,so easy to implement the logic
     var currRenderingDate = "Sat Nov 30 2024";
 
-    useEffect(() => {
-      const loadData = async () => {
-      try {
-        const allKeys = await AsyncStorage.getAllKeys();
-        const sortedKeys = allKeys.sort();
-        // extract only normal tasks
-        const ordinaryTasksKeys = sortedKeys.filter((key) => !isNaN(key));
-        const ordinaryData = await AsyncStorage.multiGet(sortedKeys);
-
-        const loadedData = ordinaryData.map(([key,value]) => {
-          var jsObj = JSON.parse(value);
-          return {
-            id : key, 
-            value : {task: jsObj.task, date: jsObj.date, time: jsObj.time, status: jsObj.status}
-          }
-        });
-        
-        // we can call taskAdded action for each task in loaded data
-        // setTasks(loadedData);
-        
-        if(firstLoad) {
-          loadedData.forEach(obj => dispatch({
-            type: "taskAdded",
-            payload: {
-              task : obj.value.task,
-              id : obj.id,
-              date: obj.value.date,
-              time: obj.value.time,
-              status: obj.value.status
-            }
-          }))
-          firstLoad = false;
-        }
-
-      } catch (error) {
-        console.error("Error in loading data : ",error);
-      }
-    }
-    loadData();
-  },[]);
-
-  const tasks = useSelector((state) => state.tasks);
+    const tasks = useSelector((state) => state.tasks);
 
   return (
     <SafeAreaView>

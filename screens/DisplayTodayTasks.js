@@ -1,8 +1,10 @@
 import { View, Text } from 'react-native'
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React, {useEffect} from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import DisplayTasks from './components/DisplayTasks';
+
+let firstLoad = true;
 
 const DisplayTodayTasks = ({navigation}) => {
 
@@ -10,7 +12,53 @@ const DisplayTodayTasks = ({navigation}) => {
     const today = new Date().toDateString();
     const todayTasks = tasks.filter((row) => row.value.date == today);
 
+    console.log(firstLoad)
+
+    const dispatch = useDispatch();
+    
+    useEffect(() => {
+        const loadData = async () => {
+        try {
+          const allKeys = await AsyncStorage.getAllKeys();
+          const sortedKeys = allKeys.sort();
+          // extract only normal tasks
+          const ordinaryTasksKeys = sortedKeys.filter((key) => !isNaN(key));
+          const ordinaryData = await AsyncStorage.multiGet(sortedKeys);
+  
+          const loadedData = ordinaryData.map(([key,value]) => {
+            var jsObj = JSON.parse(value);
+            return {
+              id : key, 
+              value : {task: jsObj.task, date: jsObj.date, time: jsObj.time, status: jsObj.status}
+            }
+          });
+          
+          // we can call taskAdded action for each task in loaded data
+          // setTasks(loadedData);
+          
+          if(firstLoad) {
+            loadedData.forEach(obj => dispatch({
+              type: "taskAdded",
+              payload: {
+                task : obj.value.task,
+                id : obj.id,
+                date: obj.value.date,
+                time: obj.value.time,
+                status: obj.value.status
+              }
+            }))
+            firstLoad = false;
+          }
+  
+        } catch (error) {
+          console.error("Error in loading data : ",error);
+        }
+      }
+      loadData();
+    },[]);
+
   return (
+
     <SafeAreaView>
         <Text style={styles.day}>{today}</Text>
         {todayTasks.map((item) => {
