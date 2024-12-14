@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useSharedState } from '../hooks/useSharedState';
 import { useDispatch,useSelector } from 'react-redux'
 
-const TaskAddingScreen = () => {
+const TaskAddingScreen = ({navigation}) => {
   
   const dispatch = useDispatch();
 
@@ -61,6 +61,8 @@ const TaskAddingScreen = () => {
         } catch (error) {
           console.error(`Error while getting all keys : ${error}`);
         }
+
+        
       } 
       else {  // if user edits data
         console.log("updating...")
