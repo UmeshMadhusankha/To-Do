@@ -14,9 +14,9 @@ function DisplayTasksStack() {
                 headerShown:false,
             }}
         >
+            <Stack.Screen name='today' component={DisplayTodayTasks}/>
             <Stack.Screen name='To-Do' component={DisplayTasksScreen}/>
             <Stack.Screen name='Status' component={TaskStatus}/>
-            <Stack.Screen name='today' component={DisplayTodayTasks}/>
         </Stack.Navigator>
   )
 }

@@ -12,7 +12,7 @@ const DisplayTodayTasks = () => {
 
   return (
     <SafeAreaView>
-        <Text style={styles.day}>{currRenderingDate}</Text>
+        <Text style={styles.day}>{today}</Text>
         {todayTasks.map((item) => {
             return (
                 <DisplayTasks key={item.id} task={item.value.task} time={item.value.time} id={item.id} status={item.value.status} navigation={navigation}/>
@@ -23,3 +23,10 @@ const DisplayTodayTasks = () => {
 }
 
 export default DisplayTodayTasks
+
+const styles = {
+  day: {
+    fontWeight: 500,
+    fontSize: 20
+  }
+};
