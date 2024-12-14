@@ -62,6 +62,8 @@ const TaskAddingScreen = ({navigation}) => {
           console.error(`Error while getting all keys : ${error}`);
         }
 
+        // should navigate to the DisplayTodayTasks screen
+        navigation.navigate("Tasks Stack");
         
       } 
       else {  // if user edits data
