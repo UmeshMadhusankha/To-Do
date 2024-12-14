@@ -3,6 +3,8 @@ import React, {useEffect} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import DisplayTasks from './components/DisplayTasks';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import ThreeDots from './components/ThreeDots';
 
 let firstLoad = true;
 
@@ -60,6 +62,9 @@ const DisplayTodayTasks = ({navigation}) => {
   return (
 
     <SafeAreaView>
+        <View style={styles.top_bar}>
+            <ThreeDots />
+        </View>
         <Text style={styles.day}>{today}</Text>
         {todayTasks.map((item) => {
             return (
@@ -76,5 +81,10 @@ const styles = {
   day: {
     fontWeight: 500,
     fontSize: 20
+  },
+  top_bar : {
+    height: 25,
+    display: 'flex',
+    alignItems: 'flex-end'
   }
 };
