@@ -13,7 +13,7 @@ const TaskStatus = ({navigation, route}) => {
   const {taskStatus} = route.params;
   const {backScreen} = route.params;
 
-console.log('TaskStatus : ',backScreen)
+//console.log('TaskStatus : ',backScreen)
 
   const valOnLoadForSelected = taskStatus ? taskStatus : 1;
   const [selectedValue,setSelectedValue] = useState(valOnLoadForSelected);

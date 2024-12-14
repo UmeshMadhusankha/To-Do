@@ -11,7 +11,7 @@ const DisplayTasks = ({id, task, time, status, backScreen, navigation}) => {
   const thisTaskStatus = thisTask.value.status;
   const relevantStyle = 'container' + thisTaskStatus;
 
-  console.log('DisplayTasks :' ,backScreen)
+  //console.log('DisplayTasks :' ,backScreen)
 
   return (
     <View style={[styles.container, styles[relevantStyle]]}>
