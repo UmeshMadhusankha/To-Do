@@ -4,11 +4,11 @@ import { useSelector } from 'react-redux'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import DisplayTasks from './components/DisplayTasks';
 
-const DisplayTodayTasks = () => {
+const DisplayTodayTasks = ({navigation}) => {
 
     const tasks = useSelector((store) => store.tasks);
     const today = new Date().toDateString();
-    const todayTasks = tasks.filter((row) => row.values.date == today);
+    const todayTasks = tasks.filter((row) => row.value.date == today);
 
   return (
     <SafeAreaView>
