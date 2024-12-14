@@ -11,6 +11,9 @@ const TaskStatus = ({navigation, route}) => {
   const {taskTime} = route.params;
   const {taskId} = route.params;
   const {taskStatus} = route.params;
+  const {backScreen} = route.params;
+
+console.log('TaskStatus : ',backScreen)
 
   const valOnLoadForSelected = taskStatus ? taskStatus : 1;
   const [selectedValue,setSelectedValue] = useState(valOnLoadForSelected);
@@ -44,6 +47,16 @@ const TaskStatus = ({navigation, route}) => {
 
   },[selectedValue]);
 
+  const navigator = () => {
+    console.log(backScreen)
+    if(backScreen) {
+      navigation.navigate(backScreen)
+    }
+    else {
+      console.error("couldnt")
+    }
+  }
+
   return (
     <SafeAreaView style={styles.status_container}>
       <Text style={[styles.texts, styles.topics]}>Task :</Text>
@@ -63,7 +76,7 @@ const TaskStatus = ({navigation, route}) => {
       <View style={styles.btn_container}>
         <TouchableOpacity 
           style={styles.btn}
-          onPress={() => navigation.navigate('To-Do')}
+          onPress={navigator}
         >
           <Text style={styles.btn_text}>OK</Text>
         </TouchableOpacity>

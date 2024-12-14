@@ -44,12 +44,12 @@ const DisplayTasksScreen = ({navigation}) => {
           return (
             <Fragment key={`date-${item.id}`}>
               <Text style={styles.day}>{currRenderingDate}</Text>
-              <DisplayTasks key={item.id} task={item.value.task} time={item.value.time} id={item.id} status={item.value.status} navigation={navigation}/>
+              <DisplayTasks backScreen={'To-Do'} key={item.id} task={item.value.task} time={item.value.time} id={item.id} status={item.value.status} navigation={navigation}/>
             </Fragment>
           )
         }
         return (
-          <DisplayTasks key={item.id} task={item.value.task} id={item.id} navigation={navigation}/>
+          <DisplayTasks backScreen={'To-Do'} key={item.id} task={item.value.task} id={item.id} navigation={navigation}/>
         );
       })}
       </buttonPropsContext.Provider>
