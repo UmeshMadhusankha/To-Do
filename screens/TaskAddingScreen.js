@@ -1,9 +1,10 @@
-import { useState } from 'react';
-import { StyleSheet, Text, TextInput, Pressable, Button, View } from 'react-native';
+import { useEffect, useState } from 'react';
+import { StyleSheet, Text, TextInput, Pressable, Button, View, Switch, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useSharedState } from '../hooks/useSharedState';
-import { useDispatch,useSelector } from 'react-redux'
+import { useDispatch,useSelector } from 'react-redux';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 const TaskAddingScreen = ({navigation}) => {
   
@@ -25,6 +26,15 @@ const TaskAddingScreen = ({navigation}) => {
     const [isPressed,setIsPressed] = useState(false);
     const [hours,setHours] = useState('');
     const [minutes,setMinutes] = useState('');
+    const [enabled,setEnabled] = useState(false);
+    const [fromDay,setFromDay] = useState(new Date().toDateString());
+    const [toDay,setToDay] = useState('- - -');
+    const [showDayPicker1,setShowDayPicker1] = useState(false);
+    const [showDayPicker2,setShowDayPicker2] = useState(false);
+
+    useEffect(() => {setShowDayPicker1(false)},[]);
+
+    const toggleSwitch = () => setEnabled(!enabled);
     
     const handleSubmit = async (task) => {
       
@@ -98,6 +108,13 @@ const TaskAddingScreen = ({navigation}) => {
         value={task}
         onChangeText={(input) => setTask(input)}
       />
+      <View style={styles.switch}>
+        <Text style={[styles.texts, styles.long_term]}>Long Term Work : </Text>
+        <Switch 
+          value={enabled}
+          onValueChange={() => toggleSwitch()}
+        />
+      </View>
       <Text style={styles.texts}>Allocated Time : </Text>
       <View style={styles.times}>
         <TextInput 
@@ -115,6 +132,43 @@ const TaskAddingScreen = ({navigation}) => {
           onChangeText={(input) => setMinutes(input)}
         />
       </View>
+      <Text style={styles.texts}>Allocated Time Period : </Text>
+      <View style={styles.days}>
+        <TouchableOpacity
+          onPress={() => setShowDayPicker1(true)}
+        >
+          <Text style={styles.day_bar}>From : </Text>
+        </TouchableOpacity>
+        <Text style={styles.day}>{fromDay}</Text>
+        <TouchableOpacity
+          onPress={() => setShowDayPicker2(true)}
+        >
+          <Text style={styles.day_bar}>To : </Text>
+        </TouchableOpacity>
+        <Text style={styles.day}>{toDay}</Text>
+      </View>
+      {showDayPicker1 && (
+        <DateTimePicker
+          value={new Date()}
+          mode='date'
+          onChange={(event,selectedDate) => {
+            if(selectedDate)
+              setFromDay(selectedDate.toDateString())
+            setShowDayPicker1(false)
+          }}
+        />
+      )}
+      {showDayPicker2 && (
+        <DateTimePicker 
+          value={new Date()}
+          mode='date'
+          onChange={(event,selectedDate) => {
+            if(selectedDate)
+              setToDay(selectedDate.toDateString())
+            setShowDayPicker2(false)
+          }}
+        />
+      )}
       <Pressable 
         style={[styles.add_button, !task && styles.add_button_disable, task && isPressed && styles.pressed_add_button]}
         hitSlop={5}
@@ -134,6 +188,19 @@ const TaskAddingScreen = ({navigation}) => {
 export default TaskAddingScreen;
 
 const styles = StyleSheet.create({
+  day: {
+    margin: 20
+  },
+  day_bar: {
+    margin: '10'
+  },
+  long_term: {
+    width: '40%'
+  },
+  switch: {
+    flexDirection: 'row',
+    width: '100%',
+  },
     texts: {
         fontSize: 18,
         margin: 10
@@ -150,7 +217,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         alignSelf: 'center',
-        marginTop: 25
+        marginTop: 30
     },
     add_button_disable : {
         backgroundColor: 'grey'
