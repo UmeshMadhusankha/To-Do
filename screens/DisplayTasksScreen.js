@@ -33,7 +33,7 @@ const DisplayTasksScreen = ({navigation}) => {
   return (
     <SafeAreaView>
       <View style={styles.top_bar}>
-        <ThreeDots />
+        <ThreeDots customName={"Todays' Tasks"} navigation={navigation}/>
       </View>
       <ScrollView>
       <buttonPropsContext.Provider value = {{setIdOfUpdatingData, setUpdateMode, setTask}}>
