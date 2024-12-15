@@ -115,60 +115,70 @@ const TaskAddingScreen = ({navigation}) => {
           onValueChange={() => toggleSwitch()}
         />
       </View>
-      <Text style={styles.texts}>Allocated Time : </Text>
-      <View style={styles.times}>
-        <TextInput 
-          style={styles.typing_bar_hours}
-          placeholder='hours' 
-          keyboardType='numeric'
-          value={hours}
-          onChangeText={(input) => setHours(input)}
-        />
-        <TextInput 
-          style={styles.typing_bar_minutes}
-          keyboardType='numeric'
-          placeholder='minutes' 
-          value={minutes}
-          onChangeText={(input) => setMinutes(input)}
-        />
-      </View>
-      <Text style={styles.texts}>Allocated Time Period : </Text>
-      <View style={styles.days}>
-        <TouchableOpacity
-          onPress={() => setShowDayPicker1(true)}
-        >
-          <Text style={styles.day_bar}>From : </Text>
-        </TouchableOpacity>
-        <Text style={styles.day}>{fromDay}</Text>
-        <TouchableOpacity
-          onPress={() => setShowDayPicker2(true)}
-        >
-          <Text style={styles.day_bar}>To : </Text>
-        </TouchableOpacity>
-        <Text style={styles.day}>{toDay}</Text>
-      </View>
-      {showDayPicker1 && (
-        <DateTimePicker
-          value={new Date()}
-          mode='date'
-          onChange={(event,selectedDate) => {
-            if(selectedDate)
-              setFromDay(selectedDate.toDateString())
-            setShowDayPicker1(false)
-          }}
-        />
-      )}
-      {showDayPicker2 && (
-        <DateTimePicker 
-          value={new Date()}
-          mode='date'
-          onChange={(event,selectedDate) => {
-            if(selectedDate)
-              setToDay(selectedDate.toDateString())
-            setShowDayPicker2(false)
-          }}
-        />
-      )}
+      {!enabled ? 
+       <>  
+        <View style={styles.times}>
+          <View style={styles.inputs}>
+          <Text style={styles.texts}>Allocated Time : </Text>
+            <TextInput 
+              style={styles.typing_bar_hours}
+              placeholder='hours' 
+              keyboardType='numeric'
+              value={hours}
+              onChangeText={(input) => setHours(input)}
+            />
+            <TextInput 
+              style={styles.typing_bar_minutes}
+              keyboardType='numeric'
+              placeholder='minutes' 
+              value={minutes}
+              onChangeText={(input) => setMinutes(input)}
+            />
+          </View>
+        </View>
+      </>
+      : 
+      <>
+      
+        <Text style={styles.texts}>Allocated Time Period : </Text>
+        <View style={styles.days}>
+          <TouchableOpacity
+            onPress={() => setShowDayPicker1(true)}
+          >
+            <Text style={styles.day_bar}>From : </Text>
+          </TouchableOpacity>
+          <Text style={styles.day}>{fromDay}</Text>
+          <TouchableOpacity
+            onPress={() => setShowDayPicker2(true)}
+          >
+            <Text style={styles.day_bar}>To : </Text>
+          </TouchableOpacity>
+          <Text style={styles.day}>{toDay}</Text>
+        </View>
+        {showDayPicker1 && (
+          <DateTimePicker
+            value={new Date()}
+            mode='date'
+            onChange={(event,selectedDate) => {
+              if(selectedDate)
+                setFromDay(selectedDate.toDateString())
+              setShowDayPicker1(false)
+            }}
+          />
+        )}
+        {showDayPicker2 && (
+          <DateTimePicker 
+            value={new Date()}
+            mode='date'
+            onChange={(event,selectedDate) => {
+              if(selectedDate)
+                setToDay(selectedDate.toDateString())
+              setShowDayPicker2(false)
+            }}
+          />
+        )}
+      </>
+      }
       <Pressable 
         style={[styles.add_button, !task && styles.add_button_disable, task && isPressed && styles.pressed_add_button]}
         hitSlop={5}
@@ -188,6 +198,9 @@ const TaskAddingScreen = ({navigation}) => {
 export default TaskAddingScreen;
 
 const styles = StyleSheet.create({
+  inputs: {
+
+  },
   day: {
     margin: 20
   },
@@ -252,7 +265,7 @@ const styles = StyleSheet.create({
       borderRadius: 10,
       margin: 10,
       padding: 10,
-      width: '30%',
+      width: '50%',
       height: 40,
     },
     typing_bar_hours : {
@@ -260,7 +273,7 @@ const styles = StyleSheet.create({
       borderRadius: 10,
       margin: 10,
       padding: 10,
-      width: '30%',
+      width: '50%',
       height: 40,
     },
     times: {
