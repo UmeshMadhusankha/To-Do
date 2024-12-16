@@ -1,27 +1,23 @@
-// let lastId = 0;
-
-export default function reducer(state=[],action) {
-    const today = new Date().toDateString();
-
+export default function longTermTasks(state = [],action) {
     switch (action.type) {
-        case "taskAdded":
+        case "longTermTaskAdded":
             return [
                 ...state,
                 {
                     id : action.payload.id,
                     value : {
                         task : action.payload.task,
-                        date : action.payload.date, 
-                        time : action.payload.time,
+                        fromDay : action.payload.fromDay,
+                        toDay : action.payload.toDay,
                         status : action.payload.status
                     }
                 }
-            ];
-            
-        case "taskRemoved":
+            ]
+
+        case "longTermTaskRemoved":
             return state.filter(row => row.id !== action.payload.id);
 
-        case "taskEdited":
+        case "longTermTaskEdited":
             return state.map(row => row.id === action.payload.id ? 
                 {...row,
                     value: {
@@ -31,7 +27,7 @@ export default function reducer(state=[],action) {
                 } : row
             );
 
-        case "taskStatusUpdated":
+        case "longTermTaskStatusUpdated":
             return state.map(row => row.id === action.payload.id ?
                 {...row,
                     value: {
@@ -41,7 +37,7 @@ export default function reducer(state=[],action) {
                 } : row
             );
 
-        case "tasksCleared":
+        case "longTermTasksCleared":
             return [];
             
         default:

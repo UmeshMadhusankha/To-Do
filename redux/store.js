@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import reducer from './reducer';
+import longTermTasks from './longTermTasks';
 
 const store = configureStore({
     reducer: {
-        tasks: reducer
+        tasks: reducer,
+        longTermTasks
     }
 })
 

@@ -14,7 +14,7 @@ const DisplayTodayTasks = ({navigation}) => {
     const today = new Date().toDateString();
     const todayTasks = tasks.filter((row) => row.value.date == today);
 
-    console.log(firstLoad)
+    // console.log(firstLoad)
 
     const dispatch = useDispatch();
     

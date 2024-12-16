@@ -37,13 +37,35 @@ const TaskAddingScreen = ({navigation}) => {
     const toggleSwitch = () => setEnabled(!enabled);
     
     const handleSubmit = async (task) => {
+
+      const numOfKeys = await AsyncStorage.getAllKeys(); 
+      const numericKeys = numOfKeys.map(key => parseInt(key)).filter(key => !isNaN(key));
+
+      // if a long term  work is entered,
+      if (enabled) {
+        const numOfExisitingLTTasks = numOfKeys - numericKeys;
+        const nextLTTKey = "L" + (numOfExisitingLTTasks + 1);
+
+        // storing data
+
+        const toBeStored = {
+          longTask : task,
+          fromDay,
+          toDay
+        };
+        const jsonObjLT = JSON.stringify(toBeStored);
+
+        try {
+          await AsyncStorage.setItem(nextLTTKey,jsonObjLT);
+        } catch (error) {
+          console.error("Long Term Task Related Error : ",error);
+        }
+      }
       
       // handling submit for a new data entry
       if (updateMode == 0) {
         // setting a key explicitly
         try {
-          const numOfKeys = await AsyncStorage.getAllKeys(); 
-          const numericKeys = numOfKeys.map(key => parseInt(key)).filter(key => !isNaN(key));
   
           // Find the next key
           const nextKey = numericKeys.length ? Math.max(...numericKeys) + 1 : 1;
