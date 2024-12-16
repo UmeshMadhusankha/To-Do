@@ -32,6 +32,8 @@ const DisplayLongTermTasks = ({navigation}) => {
               value : {task: jsObj.task, fromDay: jsObj.fromDay, toDay: jsObj.toDay, status: jsObj.status}
             }
           });
+
+          console.log(loadedData)
           
           // we can call taskAdded action for each task in loaded data
           // setTasks(loadedData);
@@ -70,7 +72,7 @@ const DisplayLongTermTasks = ({navigation}) => {
             )
         })}
     </SafeAreaView>
-  )
+  )                              
 }
 
 export default DisplayLongTermTasks

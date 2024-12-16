@@ -37,48 +37,62 @@ const TaskAddingScreen = ({navigation}) => {
     const toggleSwitch = () => setEnabled(!enabled);
     
     const handleSubmit = async (task) => {
-
-      const numOfKeys = await AsyncStorage.getAllKeys(); 
-      const numericKeys = numOfKeys.map(key => parseInt(key)).filter(key => !isNaN(key));
-
+  
       // if a long term  work is entered,
+      console.log(enabled)
       if (enabled) {
-        const numOfExisitingLTTasks = numOfKeys - numericKeys;
-        const nextLTTKey = "L" + (numOfExisitingLTTasks + 1);
-
-        // storing data
-
-        const toBeStored = {
-          longTask : task,
-          fromDay,
-          toDay,
-          status : 1
-        };
-        const jsonObjLT = JSON.stringify(toBeStored);
 
         try {
+          const numOfKeys = await AsyncStorage.getAllKeys(); 
+          let allKeysCount = 0;
+          numOfKeys.forEach(() => allKeysCount += 1);
+          const numericKeys = numOfKeys.map(key => parseInt(key)).filter(key => !isNaN(key));
+          let numericKeysCount = 0;
+          numericKeys.forEach(() => numericKeysCount += 1);
+
+          const numOfExisitingLTTasks = allKeysCount - numericKeysCount;
+          const nextLTTKey = "L" + (numOfExisitingLTTasks + 1);
+          console.log(numOfKeys,numericKeys,numOfExisitingLTTasks,allKeysCount,numericKeysCount)
+  
+          // storing data
+  
+          const toBeStored = {
+            longTask : task,
+            fromDay,
+            toDay,
+            status : 1
+          };
+          const jsonObjLT = JSON.stringify(toBeStored);
+          
           await AsyncStorage.setItem(nextLTTKey,jsonObjLT);
+
+          dispatch({
+            type: 'longTermTaskAdded',
+            payload : {
+              id : nextLTTKey,
+              task : task,
+              fromDay : fromDay,
+              toDay : toDay,
+              status : 1
+            }
+          });
+
         } catch (error) {
-          console.error("Long Term Task Related Error : ",error);
+          console.error("error in handling submit : ", error)
         }
 
-        dispatch({
-          type: 'longTermTaskAdded',
-          payload : {
-            id : nextLTTKey,
-            task : task,
-            fromDay : fromDay,
-            toDay : toDay,
-            status : 1
-          }
-        })
+        navigation.navigate("Tasks Stack");
       }
       
       // handling submit for a new data entry
-      if (updateMode == 0) {
+      else if (updateMode == 0 && !enabled) {
         // setting a key explicitly
         try {
-  
+          console.log("run 1")
+
+          const numOfKeys = await AsyncStorage.getAllKeys();
+          const numericKeys = numOfKeys.map(key => parseInt(key)).filter(key => !isNaN(key));
+
           // Find the next key
           const nextKey = numericKeys.length ? Math.max(...numericKeys) + 1 : 1;
 
@@ -98,6 +112,7 @@ const TaskAddingScreen = ({navigation}) => {
               id : nextKey,
               date : today,
               time : timeInMins,
+              status: 1,
               task
             }
           })
