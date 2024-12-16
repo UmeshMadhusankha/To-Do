@@ -51,7 +51,8 @@ const TaskAddingScreen = ({navigation}) => {
         const toBeStored = {
           longTask : task,
           fromDay,
-          toDay
+          toDay,
+          status : 1
         };
         const jsonObjLT = JSON.stringify(toBeStored);
 
@@ -60,6 +61,17 @@ const TaskAddingScreen = ({navigation}) => {
         } catch (error) {
           console.error("Long Term Task Related Error : ",error);
         }
+
+        dispatch({
+          type: 'longTermTaskAdded',
+          payload : {
+            id : nextLTTKey,
+            task : task,
+            fromDay : fromDay,
+            toDay : toDay,
+            status : 1
+          }
+        })
       }
       
       // handling submit for a new data entry

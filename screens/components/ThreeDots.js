@@ -6,7 +6,7 @@ import { seeStoredData } from '../functions/SeeDataBtn';
 import { clearStorage } from '../functions/ClearHistoryBtn';
 import { useDispatch } from 'react-redux';
 
-const ThreeDots = ({customName, navigation}) => {
+const ThreeDots = ({customName, customName2, navigation}) => {
 
     const dispatch = useDispatch();
 
@@ -17,7 +17,23 @@ const ThreeDots = ({customName, navigation}) => {
     const navigateFunction = () => {
         if (customName == 'See History') {
             navigation.navigate('To-Do');
-        } else {
+        } 
+        else if (customName == 'long') {
+            navigation.navigate('long');
+        }
+        else {
+            navigation.navigate('today');
+        }
+    }
+
+    const navigateFunction2 = () => {
+        if (customName2 == 'long') {
+            navigation.navigate('long');
+        }
+        else if (customName2 == 'To-Do') {
+            navigation.navigate('To-Do');
+        } 
+        else {
             navigation.navigate('today');
         }
     }
@@ -52,6 +68,14 @@ const ThreeDots = ({customName, navigation}) => {
                 >
                     <Text style={styles.button_text}>{customName}</Text>
                 </Pressable>
+
+                <Pressable
+                    style={[styles.btn, isPressed && styles.btn_pressed]}
+                    onPress={() => navigateFunction2()}
+                >
+                    <Text style={styles.button_text}>{customName2}</Text>
+                </Pressable>
+
                 <Pressable 
                     style={[styles.btn, isPressed && styles.btn_pressed]}
                     onPress={() => clearStorage(dispatch)}
