@@ -63,7 +63,7 @@ const DisplayTodayTasks = ({navigation}) => {
 
     <SafeAreaView>
         <View style={styles.top_bar}>
-            <ThreeDots customName={'See History'} navigation={navigation}/>
+            <ThreeDots customName={'See History'} customName2={"Long Term Tasks"} navigation={navigation}/>
         </View>
         <Text style={styles.day}>{today}</Text>
         {todayTasks.map((item) => {

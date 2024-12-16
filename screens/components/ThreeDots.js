@@ -18,7 +18,7 @@ const ThreeDots = ({customName, customName2, navigation}) => {
         if (customName == 'See History') {
             navigation.navigate('To-Do');
         } 
-        else if (customName == 'long') {
+        else if (customName == 'Long Term Tasks') {
             navigation.navigate('long');
         }
         else {
@@ -27,7 +27,7 @@ const ThreeDots = ({customName, customName2, navigation}) => {
     }
 
     const navigateFunction2 = () => {
-        if (customName2 == 'long') {
+        if (customName2 == 'Long Term Tasks') {
             navigation.navigate('long');
         }
         else if (customName2 == 'To-Do') {
