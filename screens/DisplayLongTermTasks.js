@@ -10,7 +10,11 @@ let firstLoad = true;
 
 const DisplayLongTermTasks = ({navigation}) => {
 
+  console.log("long term tasks started")
+
     const longTasks = useSelector((store) => store.longTermTasks);
+    console.log("long tasks : ",longTasks);
+    console.log(typeof(longTasks))
 
     // console.log(firstLoad)
 
@@ -24,7 +28,7 @@ const DisplayLongTermTasks = ({navigation}) => {
           // extract only normal tasks
           const longTasksKeys = sortedKeys.filter((key) => isNaN(key));
           const longTasksData = await AsyncStorage.multiGet(longTasksKeys);
-  
+  console.log("long tasks data : ",longTasksData);
           const loadedData = longTasksData.map(([key,value]) => {
             var jsObj = JSON.parse(value);
             return {
@@ -33,7 +37,7 @@ const DisplayLongTermTasks = ({navigation}) => {
             }
           });
 
-          console.log(loadedData)
+          console.log('loaded data inside long term : ',loadedData)
           
           // we can call taskAdded action for each task in loaded data
           // setTasks(loadedData);
@@ -59,6 +63,8 @@ const DisplayLongTermTasks = ({navigation}) => {
       loadData();
     },[]);
 
+    console.log("long term tasks ended")
+
   return (
 
     <SafeAreaView>
@@ -67,9 +73,11 @@ const DisplayLongTermTasks = ({navigation}) => {
         </View>
         <Text style={styles.day}>Long Term Tasks</Text>
         {longTasks.map((item) => {
-            return (
-                <DisplayTasks backScreen={'today'} customName2={"Todays' Tasks"} key={item.id} task={item.value.task} time={item.value.time} id={item.id} status={item.value.status} navigation={navigation}/>
-            )
+          if (!item || !item.value) return null;
+          console.log("each item : ",item)
+          return (
+              <DisplayTasks backScreen={'today'} key={item.id} task={item.value.task} id={item.id} status={item.value.status} navigation={navigation}/>
+          )
         })}
     </SafeAreaView>
   )                              

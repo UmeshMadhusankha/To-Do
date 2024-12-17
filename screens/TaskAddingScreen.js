@@ -8,6 +8,8 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 
 const TaskAddingScreen = ({navigation}) => {
   
+  console.log("task adding screen started")
+
   const dispatch = useDispatch();
 
   const {
@@ -43,6 +45,7 @@ const TaskAddingScreen = ({navigation}) => {
       if (enabled) {
 
         try {
+          // calculating long key, correct when console logged and checked
           const numOfKeys = await AsyncStorage.getAllKeys(); 
           let allKeysCount = 0;
           numOfKeys.forEach(() => allKeysCount += 1);
@@ -55,7 +58,7 @@ const TaskAddingScreen = ({navigation}) => {
           console.log(numOfKeys,numericKeys,numOfExisitingLTTasks,allKeysCount,numericKeysCount)
   
           // storing data
-  
+  console.log("long task : ",task)
           const toBeStored = {
             longTask : task,
             fromDay,
@@ -147,6 +150,8 @@ const TaskAddingScreen = ({navigation}) => {
       setHours('');
       setMinutes('');
     } 
+
+    console.log("task adding screen ended")
 
   return (
     <SafeAreaView style={styles.container}>

@@ -18,6 +18,8 @@ const DisplayTodayTasks = ({navigation}) => {
 
     const dispatch = useDispatch();
     
+// load the long term tasks from async storage correctly
+
     useEffect(() => {
         const loadData = async () => {
         try {
@@ -25,21 +27,31 @@ const DisplayTodayTasks = ({navigation}) => {
           const sortedKeys = allKeys.sort();
           // extract only normal tasks
           const ordinaryTasksKeys = sortedKeys.filter((key) => !isNaN(key));
-          const ordinaryData = await AsyncStorage.multiGet(sortedKeys);
+          const ordinaryData = await AsyncStorage.multiGet(ordinaryTasksKeys);
+          const longTasksKeys = sortedKeys.filter((key) => isNaN(key));
+          const longData = await AsyncStorage.multiGet(longTasksKeys);
   
-          const loadedData = ordinaryData.map(([key,value]) => {
+          const loadedOrdinaryData = ordinaryData.map(([key,value]) => {
             var jsObj = JSON.parse(value);
             return {
               id : key, 
               value : {task: jsObj.task, date: jsObj.date, time: jsObj.time, status: jsObj.status}
             }
           });
+
+          const loadedLongData = longData.map(([key,value]) => {
+            var jsObj = JSON.parse(value);
+            return {
+              id : key,
+              value : {task: jsObj.longTask, fromDay: jsObj.fromDay, toDay: jsObj.toDay, status: jsObj.status}
+            }
+          }) 
           
           // we can call taskAdded action for each task in loaded data
           // setTasks(loadedData);
           
           if(firstLoad) {
-            loadedData.forEach(obj => dispatch({
+            loadedOrdinaryData.forEach(obj => dispatch({
               type: "taskAdded",
               payload: {
                 task : obj.value.task,
@@ -49,6 +61,18 @@ const DisplayTodayTasks = ({navigation}) => {
                 status: obj.value.status
               }
             }))
+
+            loadedLongData.forEach(obj => dispatch({
+              type: "longTermTaskAdded",
+              payload: {
+                id : obj.id,
+                task : obj.value.task,
+                fromDay : obj.value.fromDay,
+                toDay : obj.value.toDay,
+                status : obj.value.status
+              }
+            }))
+
             firstLoad = false;
           }
   

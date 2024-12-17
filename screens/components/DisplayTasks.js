@@ -6,8 +6,16 @@ import { useSelector } from 'react-redux';
 
 const DisplayTasks = ({id, task, time, status, backScreen, navigation}) => {
 
+  console.log("display tasks ")
   const tasks = useSelector((state) => state.tasks);
-  const thisTask = tasks.find((row) => row.id === id);
+  
+  let thisTask = tasks.find((row) => row.id === id);
+
+  if(thisTask == null) {
+    const longTasks = useSelector((state) => state.longTermTasks);
+    thisTask = longTasks.find((row) => row.id == id);
+  }
+
   const thisTaskStatus = thisTask.value.status;
   const relevantStyle = 'container' + thisTaskStatus;
 

@@ -13,6 +13,7 @@ const ThreeDots = ({customName, customName2, navigation}) => {
     const [shown,setShown] = useState(false);
     const [isPressed,setIsPressed] = useState(false);
     const tasks = useSelector((state) => state.tasks);
+    const longTasks = useSelector((state) => state.longTermTasks);
 
     const navigateFunction = () => {
         if (customName == 'See History') {
@@ -84,7 +85,7 @@ const ThreeDots = ({customName, customName2, navigation}) => {
                 >
                     <Text style={styles.button_text}>Clear History</Text>
                 </Pressable>
-                <Button title="See data" onPress={() => {seeStoredData(tasks)}}></Button>
+                <Button title="See data" onPress={() => {seeStoredData(tasks,longTasks)}}></Button>
             </View>
         </View>
         <Pressable 

@@ -5,7 +5,7 @@ import longTermTasks from './longTermTasks';
 const store = configureStore({
     reducer: {
         tasks: reducer,
-        longTermTasks
+        longTermTasks: longTermTasks
     }
 })
 
