@@ -62,7 +62,7 @@ const TaskAddingScreen = ({navigation}) => {
           };
           const jsonObjLT = JSON.stringify(toBeStored);
           
-          await AsyncStorage.setItem(nextLTTKey,jsonObjLT);
+          await AsyncStorage.setItem(`${nextLTTKey}`,jsonObjLT);
 
           dispatch({
             type: 'longTermTaskAdded',

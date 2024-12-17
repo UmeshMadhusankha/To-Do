@@ -17,6 +17,7 @@ export default function longTermTasks(state = [],action) {
         case "longTermTaskRemoved":
             return state.filter(row => row.id !== action.payload.id);
 
+
         case "longTermTaskEdited":
             return state.map(row => row.id === action.payload.id ? 
                 {...row,

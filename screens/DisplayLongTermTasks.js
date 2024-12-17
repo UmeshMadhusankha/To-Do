@@ -1,14 +1,57 @@
 import { View, Text } from 'react-native'
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import DisplayTasks from './components/DisplayTasks';
 import ThreeDots from './components/ThreeDots';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const DisplayLongTermTasks = ({navigation}) => {
 
     const longTasks = useSelector((store) => store.longTermTasks);
+    const dispatch = useDispatch();
 
+    //everytime this renders, we want just to update only the redux state
+    // to do so we can clear redux store everytime and then re store them one by one
+    useEffect(() => {
+      // clear
+      dispatch({
+        type: 'longTermTasksCleared'
+      })
+
+      // re update
+      const reUpdater = async() => {
+        try {
+          const allKeys = await AsyncStorage.getAllKeys();
+          const sortedKeys = allKeys.sort();
+          const longKeys = sortedKeys.filter((key) => isNaN(key));
+          const allLongData = await AsyncStorage.multiGet(longKeys);
+
+          const loadedLongData = allLongData.map(([key,value]) => {
+            var jsObj = JSON.parse(value);
+            return {
+              id : key,
+              value : {task: jsObj.longTask, fromDay: jsObj.fromDay, toDay: jsObj.toDay, status: jsObj.status}
+            }
+          })
+
+          loadedLongData.forEach(obj => dispatch({
+            type: "longTermTaskAdded",
+            payload: {
+              id : obj.id,
+              task : obj.value.task,
+              fromDay : obj.value.fromDay,
+              toDay : obj.value.toDay,
+              status : obj.value.status
+            }
+          }))
+          
+        } catch (error) {
+          console.error("error in the display long term tasks screen use effect : ",error);
+        }
+      }
+      reUpdater();
+    },[]);
   return (
 
     <SafeAreaView>
@@ -19,7 +62,7 @@ const DisplayLongTermTasks = ({navigation}) => {
         {longTasks.map((item) => {
           // if (!item || !item.value) return null;
           return (
-              <DisplayTasks backScreen={'today'} key={item.id} task={item.value.task} id={item.id} status={item.value.status} navigation={navigation}/>
+              <DisplayTasks backScreen={'long'} key={item.id} task={item.value.task} id={item.id} status={item.value.status} navigation={navigation} fromDay={item.value.fromDay} toDay={item.value.toDay}/>
           )
         })}
     </SafeAreaView>

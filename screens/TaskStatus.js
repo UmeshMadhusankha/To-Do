@@ -12,6 +12,8 @@ const TaskStatus = ({navigation, route}) => {
   const {taskId} = route.params;
   const {taskStatus} = route.params;
   const {backScreen} = route.params;
+  const {fromDay} = route.params;
+  const {toDay} = route.params;
 
 //console.log('TaskStatus : ',backScreen)
 
@@ -61,8 +63,19 @@ const TaskStatus = ({navigation, route}) => {
     <SafeAreaView style={styles.status_container}>
       <Text style={[styles.texts, styles.topics]}>Task :</Text>
       <Text style={[styles.texts, styles.task_style]}>{taskExist}</Text>
-      <Text style={[styles.texts, styles.topics]}>Time Allocated :</Text>
-      <Text style={[styles.texts, styles.task_style]}>{taskTime ? `${Math.floor(taskTime / 60)} hours ${taskTime % 60} minutes` : 'Did not set'}</Text>
+      {fromDay != null ? 
+      <>
+        <Text style={[styles.texts, styles.topics]}>From :</Text>
+        <Text style={[styles.texts, styles.task_style]}>{fromDay}</Text>
+        <Text style={[styles.texts, styles.topics]}>To :</Text>
+        <Text style={[styles.texts, styles.task_style]}>{toDay}</Text>
+      </>
+      :
+      <>
+        <Text style={[styles.texts, styles.topics]}>Time Allocated :</Text>
+        <Text style={[styles.texts, styles.task_style]}>{taskTime ? `${Math.floor(taskTime / 60)} hours ${taskTime % 60} minutes` : 'Did not set'}</Text>
+      </>
+      }
       <Text style={[styles.texts, styles.topics, styles.status_style]}>Status :</Text>
       <Picker 
         style={styles.picker}
