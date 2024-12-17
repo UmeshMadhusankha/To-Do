@@ -1,17 +1,28 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useDispatch, useSelector } from 'react-redux';
 
 // implementing the delete buttons' logic
 export const deleteLogic = async (key,dispatch) => {
 
     try {
       await AsyncStorage.removeItem(String(key));
-      dispatch({
-        type: "taskRemoved",
-        payload: {
-          id: key
-        }
-      })
+      
+      // updating the logic to meet the requirement for deleting long tasks as well
+      if (!isNaN(parseInt(key))) {
+        dispatch({
+          type: "taskRemoved",
+          payload: {
+            id: key
+          }
+        })
+      }
+      else {
+        dispatch({
+          type: "longTermTaskRemoved",
+          payload: {
+            id: key
+          }
+        })
+      }
       /*
       setTasks(
         tasks.filter((item) => item.id != key)
