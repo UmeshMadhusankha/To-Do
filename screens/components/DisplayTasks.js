@@ -6,7 +6,6 @@ import { useSelector } from 'react-redux';
 
 const DisplayTasks = ({id, task, time, status, backScreen, navigation}) => {
 
-  console.log("display tasks ")
   const tasks = useSelector((state) => state.tasks);
   
   let thisTask = tasks.find((row) => row.id === id);

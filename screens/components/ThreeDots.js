@@ -1,4 +1,4 @@
-import { View, Text, TouchableWithoutFeedback, Modal, Pressable, Button } from 'react-native'
+import { View, Text, TouchableWithoutFeedback, Modal, Pressable, Button, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -63,28 +63,28 @@ const ThreeDots = ({customName, customName2, navigation}) => {
                 onPress={() => setShown(false)}
             />
             <View style={styles.opts}>
-                <Pressable
-                    style={[styles.btn, isPressed && styles.btn_pressed]}
+                <TouchableOpacity
+                    style={[styles.btn]}
                     onPress={() => navigateFunction()}
                 >
                     <Text style={styles.button_text}>{customName}</Text>
-                </Pressable>
+                </TouchableOpacity>
 
-                <Pressable
-                    style={[styles.btn, isPressed && styles.btn_pressed]}
+                <TouchableOpacity
+                    style={[styles.btn]}
                     onPress={() => navigateFunction2()}
                 >
                     <Text style={styles.button_text}>{customName2}</Text>
-                </Pressable>
+                </TouchableOpacity>
 
-                <Pressable 
-                    style={[styles.btn, isPressed && styles.btn_pressed]}
+                <TouchableOpacity 
+                    style={[styles.btn]}
                     onPress={() => clearStorage(dispatch)}
                     onPressIn={() => setIsPressed(true)}
                     onPressOut={() => setIsPressed(false)}
                 >
                     <Text style={styles.button_text}>Clear History</Text>
-                </Pressable>
+                </TouchableOpacity>
                 <Button title="See data" onPress={() => {seeStoredData(tasks,longTasks)}}></Button>
             </View>
         </View>
@@ -105,9 +105,15 @@ const styles = {
         padding: 10,
         borderRadius: 10
     },
-    btn_pressed: {
-        backgroundColor: '#fff'
-    },
+    // clear_pressed: {
+    //     backgroundColor: '#fff'
+    // },
+    // screen1_pressed: {
+    //     backgroundColor: '#fff'
+    // },
+    // screen2_pressed: {
+    //     backgroundColor: '#fff'
+    // },
     button_text: {
         fontWeight: 700,
         textAlign: 'center'
