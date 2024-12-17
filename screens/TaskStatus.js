@@ -39,7 +39,7 @@ const TaskStatus = ({navigation, route}) => {
         const currDataObj = JSON.parse(currData);
         const updatedData = { ...currDataObj, status: selectedValue };
         const updatedDataJson = JSON.stringify(updatedData);
-        await AsyncStorage.setItem(taskId, updatedDataJson);
+        await AsyncStorage.setItem(`${taskId}`, updatedDataJson);
       } catch (error) {
         console.error("Error updating AsyncStorage:", error);
       }
