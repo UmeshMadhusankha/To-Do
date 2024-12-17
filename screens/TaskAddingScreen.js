@@ -143,6 +143,9 @@ const TaskAddingScreen = ({navigation}) => {
       setTask('');
       setHours('');
       setMinutes('');
+      // newly added
+      setFromDay(new Date().toDateString());
+      setToDay('- - -');
     } 
 
   return (
