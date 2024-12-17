@@ -8,8 +8,6 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 
 const TaskAddingScreen = ({navigation}) => {
   
-  console.log("task adding screen started")
-
   const dispatch = useDispatch();
 
   const {
@@ -41,7 +39,6 @@ const TaskAddingScreen = ({navigation}) => {
     const handleSubmit = async (task) => {
   
       // if a long term  work is entered,
-      console.log(enabled)
       if (enabled) {
 
         try {
@@ -55,10 +52,8 @@ const TaskAddingScreen = ({navigation}) => {
 
           const numOfExisitingLTTasks = allKeysCount - numericKeysCount;
           const nextLTTKey = "L" + (numOfExisitingLTTasks + 1);
-          console.log(numOfKeys,numericKeys,numOfExisitingLTTasks,allKeysCount,numericKeysCount)
   
           // storing data
-  console.log("long task : ",task)
           const toBeStored = {
             longTask : task,
             fromDay,
@@ -84,14 +79,13 @@ const TaskAddingScreen = ({navigation}) => {
           console.error("error in handling submit : ", error)
         }
 
-        navigation.navigate("Tasks Stack");
+        navigation.navigate("Tasks Stack", {screen : 'long'});
       }
       
       // handling submit for a new data entry
       else if (updateMode == 0 && !enabled) {
         // setting a key explicitly
         try {
-          console.log("run 1")
 
           const numOfKeys = await AsyncStorage.getAllKeys();
           const numericKeys = numOfKeys.map(key => parseInt(key)).filter(key => !isNaN(key));
@@ -150,8 +144,6 @@ const TaskAddingScreen = ({navigation}) => {
       setHours('');
       setMinutes('');
     } 
-
-    console.log("task adding screen ended")
 
   return (
     <SafeAreaView style={styles.container}>

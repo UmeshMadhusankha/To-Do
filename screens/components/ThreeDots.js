@@ -1,4 +1,4 @@
-import { View, Text, TouchableWithoutFeedback, Modal, Pressable, Button, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableWithoutFeedback, Modal, Pressable, Button, TouchableOpacity, Alert } from 'react-native'
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -37,6 +37,23 @@ const ThreeDots = ({customName, customName2, navigation}) => {
         else {
             navigation.navigate('today');
         }
+    }
+
+    const showAlert = () => {
+        Alert.alert(
+            'Are You Sure?',
+            'Do you want to remove all of your tasks from the storage?',
+            [
+                {
+                    text: 'Yes',
+                    onPress: () => clearStorage(dispatch)
+                },
+                {
+                    text: 'No',
+                }
+            ],
+            {cancelable: true}
+        )
     }
 
   return (
@@ -79,7 +96,7 @@ const ThreeDots = ({customName, customName2, navigation}) => {
 
                 <TouchableOpacity 
                     style={[styles.btn]}
-                    onPress={() => clearStorage(dispatch)}
+                    onPress={() => showAlert()}
                     onPressIn={() => setIsPressed(true)}
                     onPressOut={() => setIsPressed(false)}
                 >

@@ -8,6 +8,9 @@ export const clearStorage = async (dispatch) => {
       dispatch({
         type: "tasksCleared"
       })
+      dispatch({
+        type: "longTermTasksCleared"
+      })
       // setTasks([]); // Clear the tasks from the state as well
       console.log("AsyncStorage cleared successfully!");
     } catch (error) {
