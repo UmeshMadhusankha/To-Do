@@ -62,7 +62,7 @@ const DisplayLongTermTasks = ({navigation}) => {
         {longTasks.map((item) => {
           // if (!item || !item.value) return null;
           return (
-              <DisplayTasks backScreen={'long'} key={item.id} task={item.value.task} id={item.id} status={item.value.status} navigation={navigation} fromDay={item.value.fromDay} toDay={item.value.toDay}/>
+              <DisplayTasks backScreen={'long'} key={item.id} task={item.value.task} id={item.id} status={item.value.status} navigation={navigation} fromDay={item.value.fromDay} toDay={item.value.toDay} isLong={1}/>
           )
         })}
     </SafeAreaView>

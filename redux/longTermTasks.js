@@ -23,7 +23,9 @@ export default function longTermTasks(state = [],action) {
                 {...row,
                     value: {
                         ...row.value,
-                        task: action.payload.task
+                        task: action.payload.task,
+                        fromDay : action.payload.fromDay,
+                        toDay : action.payload.toDay
                     }
                 } : row
             );

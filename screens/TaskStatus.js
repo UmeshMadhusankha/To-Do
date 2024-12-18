@@ -35,7 +35,7 @@ const TaskStatus = ({navigation, route}) => {
     // async storage update
     const updateAsyncStorage = async () => {
       try {
-        const currData = await AsyncStorage.getItem(taskId);
+        const currData = await AsyncStorage.getItem(String(taskId));
         const currDataObj = JSON.parse(currData);
         const updatedData = { ...currDataObj, status: selectedValue };
         const updatedDataJson = JSON.stringify(updatedData);

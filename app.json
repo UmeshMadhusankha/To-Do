@@ -19,7 +19,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/to-do-logo.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.umesh_yapa.ToDo"
     },
     "web": {
       "favicon": "./assets/to-do-logo.png"

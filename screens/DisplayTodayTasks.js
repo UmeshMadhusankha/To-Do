@@ -92,7 +92,7 @@ const DisplayTodayTasks = ({navigation}) => {
         <Text style={styles.day}>{today}</Text>
         {todayTasks.map((item) => {
             return (
-                <DisplayTasks backScreen={'today'} key={item.id} task={item.value.task} time={item.value.time} id={item.id} status={item.value.status} navigation={navigation}/>
+                <DisplayTasks backScreen={'today'} key={item.id} task={item.value.task} time={item.value.time} id={item.id} status={item.value.status} navigation={navigation} isLong={0}/>
             )
         })}
     </SafeAreaView>

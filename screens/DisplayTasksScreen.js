@@ -11,7 +11,9 @@ import ThreeDots from './components/ThreeDots';
 export const buttonPropsContext = createContext();
 
 const DisplayTasksScreen = ({navigation}) => {
-    
+  
+  const tasks = useSelector((state) => state.tasks);
+
     const {
       /*
         tasks,
@@ -28,7 +30,6 @@ const DisplayTasksScreen = ({navigation}) => {
     // set a date that never can be the same ,so easy to implement the logic
     var currRenderingDate = "Sat Nov 30 2024";
 
-    const tasks = useSelector((state) => state.tasks);
 
   return (
     <SafeAreaView>
@@ -44,12 +45,12 @@ const DisplayTasksScreen = ({navigation}) => {
           return (
             <Fragment key={`date-${item.id}`}>
               <Text style={styles.day}>{currRenderingDate}</Text>
-              <DisplayTasks backScreen={'To-Do'} key={item.id} task={item.value.task} time={item.value.time} id={item.id} status={item.value.status} navigation={navigation}/>
+              <DisplayTasks backScreen={'To-Do'} key={item.id} task={item.value.task} time={item.value.time} id={item.id} status={item.value.status} navigation={navigation} isLong={0}/>
             </Fragment>
           )
         }
         return (
-          <DisplayTasks backScreen={'To-Do'} key={item.id} task={item.value.task} id={item.id} navigation={navigation}/>
+          <DisplayTasks backScreen={'To-Do'} key={item.id} task={item.value.task} id={item.id} navigation={navigation} isLong={0}/>
         );
       })}
       </buttonPropsContext.Provider>

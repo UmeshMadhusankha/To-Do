@@ -2,11 +2,16 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import React from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { editLogic } from '../functions/EditDeleteBtnLogics';
-import { useSharedState } from '../../hooks/useSharedState';
+import { useDispatch } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
+//import { useSharedState } from '../../hooks/useSharedState';
 
-const EditButton = ({ style, id }) => {
+const EditButton = ({ style, id, isLong }) => {
 
-  const { setTask, setIdOfUpdatingData, setUpdateMode } = useSharedState();
+  let dispatch = useDispatch();
+  let navigation = useNavigation();
+
+  //const { setTask, setIdOfUpdatingData, setUpdateMode } = useSharedState();
 
   return (
     <View style={styles.container}>
@@ -15,7 +20,7 @@ const EditButton = ({ style, id }) => {
           style={[styles.delete_button, style]}
           name='pen' 
           size={30}  
-          onPress={() => editLogic(id, setTask, setIdOfUpdatingData, setUpdateMode)}
+          onPress={() => editLogic(longTask = isLong, idOfUpdatingData = id, navigation = navigation, dispatch = dispatch)}
         />
       </TouchableOpacity>
     </View>

@@ -4,14 +4,14 @@ import DeleteButton from './DeleteButton';
 import EditButton from './EditButton';
 import { useSelector } from 'react-redux';
 
-const DisplayTasks = ({id, task, time, status, backScreen, navigation, fromDay, toDay}) => {
+const DisplayTasks = ({id, task, time, status, backScreen, navigation, fromDay, toDay, isLong}) => {
 
   const tasks = useSelector((state) => state.tasks);
+  const longTasks = useSelector((state) => state.longTermTasks);
   
   let thisTask = tasks.find((row) => row.id === id);
 
   if(thisTask == null) {
-    const longTasks = useSelector((state) => state.longTermTasks);
     thisTask = longTasks.find((row) => row.id == id);
   }
 
@@ -30,7 +30,7 @@ const DisplayTasks = ({id, task, time, status, backScreen, navigation, fromDay, 
       </TouchableOpacity>
       <View style={styles.button_container}>
         <DeleteButton style={styles.del} id={id}/>
-        <EditButton style={styles.edit} id={id}/>
+        <EditButton style={styles.edit} id={id} isLong={isLong}/>
       </View>
     </View>
   )
