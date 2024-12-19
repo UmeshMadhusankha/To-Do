@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 // implementing the delete buttons' logic
 export const deleteLogic = async (key,dispatch) => {
@@ -58,6 +58,10 @@ export const editLogic = (longTask,idOfUpdatingData,navigation,dispatch) => {
   // const dispatch = useDispatch();
   
   // navigate to the tasks adding screen
+  console.log("")
+  console.log("edit logic called")
+  console.log(`longTask : ${longTask}, idOfupdatingData : ${idOfUpdatingData}, `)
+
   dispatch({
     type: "updateTask",
     payload: {

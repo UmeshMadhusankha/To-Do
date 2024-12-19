@@ -26,7 +26,8 @@ export default function reducer(state=[],action) {
                 {...row,
                     value: {
                         ...row.value,
-                        task: action.payload.task
+                        task: action.payload.task,
+                        time: action.payload.time
                     }
                 } : row
             );

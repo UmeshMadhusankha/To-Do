@@ -40,17 +40,30 @@ const TaskAddingScreen = ({navigation}) => {
 
   const [firstRender,setFirstRender] = useState(true);
 
-  useEffect(() => {setShowDayPicker1(false)},[]);
+  useEffect(() => {
+    setShowDayPicker1(false)
+  },[]);
+
+  // isAnUpdate when changed, change firstRender
+  useEffect(() => {
+    // console.log('set to true')
+    if (isAnUpdate === 1 && firstRender === false) {
+      setFirstRender(true);
+    }
+  },[isAnUpdate])
 
   const toggleSwitch = () => setEnabled(!enabled);
 
   // will need to set data if updating
-  console.log("")
-  console.log(firstRender)
-  console.log("Good to this Point")
+  // console.log("")
+  // console.log("firstRender : ",firstRender)
+
+  // console.log("isAnUpdate : ",isAnUpdate)
+  // console.log("Good to this Point")
   if (isAnUpdate == 1) {
     if (longTask == 1) {
       // retrieve data from redux store
+      // console.log("setting up tp update long task")
       
       longTermTasks.map((longTask) => {
         if (longTask.id == idOfUpdatingData) {
@@ -72,15 +85,21 @@ const TaskAddingScreen = ({navigation}) => {
     } else {
       tasks.map((ordinaryTask) => {
         if (ordinaryTask.id == idOfUpdatingData) {
+          // console.log("setting up to update ordinary task")
           const task = ordinaryTask.value.task;
           const time = ordinaryTask.value.time;
+          //console.log(ordinaryTask.value)
+          //console.log(typeof(time), time)
           const hours = Math.floor(time / 60);
           const minutes = time % 60;
+          //console.log(hours, minutes)
+          //console.log(typeof(hours),typeof(minutes))
 
           if (firstRender === true) {
+            //console.log("running")
             setTask(task);
-            setHours(hours);
-            setMinutes(minutes);
+            setHours(`${hours}`);
+            setMinutes(`${minutes}`);
             setFirstRender(false);
           }
 
@@ -89,7 +108,7 @@ const TaskAddingScreen = ({navigation}) => {
       })
     }
   }  
-  console.log("Good to this Point as Well")
+  // console.log("Good to this Point as Well")
 
     
     const handleSubmit = async (task) => {
@@ -151,7 +170,10 @@ const TaskAddingScreen = ({navigation}) => {
 
           // finding date
           const today = new Date().toDateString();
+          // console.log("inside new ordinary task adding, ")
+          // console.log(`hours : ${hours}, minutes : ${minutes}`)
           const timeInMins = parseInt(hours) * 60 + parseInt(minutes);
+          // console.log(typeof(minutes), typeof(hours), typeof(timeInMins))
           const valAsJson = JSON.stringify({'task' : task, 'date' : today, 'time' : timeInMins, 'status' : 1});
 
           // storing data 
@@ -182,25 +204,26 @@ const TaskAddingScreen = ({navigation}) => {
       // Updating a long term task
       else if (longTask != 0 && isAnUpdate != 0) {  
         // if user edits data
-        console.log("updating long term task...");
+        // console.log("updating long term task...");
         // async delete
-        async () => {
+        (async () => {
           await AsyncStorage.removeItem(String(idOfUpdatingData));
           // storing data
           const toBeStored = {
             longTask : task,
-            fromDay,
-            toDay,
+            fromDay : fromDay,
+            toDay : toDay,
             status : 1
           };
           const jsonObjLT = JSON.stringify(toBeStored);
           
-          await AsyncStorage.setItem(`${nextLTTKey}`,jsonObjLT);
+          await AsyncStorage.setItem(`${idOfUpdatingData}`,jsonObjLT);
 
           // update redux store
           dispatch({
             type: "longTermTaskEdited",
             payload: {
+              id: idOfUpdatingData,
               task: task,
               fromDay : fromDay,
               toDay : toDay
@@ -211,28 +234,35 @@ const TaskAddingScreen = ({navigation}) => {
           dispatch({
             type: "updateFinished"
           })
+          console.log('here')
 
-        }
+          // navigating to the long tasks screen
+          navigation.navigate("Tasks Stack");
+
+        })();
       }
 
       // Updating a Ordinary Task
       else if (longTask == 0 && isAnUpdate != 0) {
-        console.log("Updating an Ordinary Task");
+        // console.log("Updating an Ordinary Task");
         
-        async () => {
+        (async () => {
           const deletingData = await AsyncStorage.getItem(String(idOfUpdatingData));
           const deletingDataAsObj = JSON.parse(deletingData);
           const relevantDay = deletingDataAsObj.date;
           await AsyncStorage.removeItem(String(idOfUpdatingData));
+          const timeInMins = parseInt(hours) * 60 + parseInt(minutes);
           // jsonify val before store
-          const jsonObjToStore = JSON.stringify({'task' : task, 'date' : relevantDay});
+          const jsonObjToStore = JSON.stringify({'task' : task, 'date' : relevantDay, 'time' : `${timeInMins}`});
           await AsyncStorage.setItem(String(idOfUpdatingData), jsonObjToStore);
 
           // updating the redux store
           dispatch({
             type: "taskEdited",
             payload: {
-              task : task
+              id : idOfUpdatingData,
+              task : task,
+              time : timeInMins
             }
           })
 
@@ -240,7 +270,15 @@ const TaskAddingScreen = ({navigation}) => {
           dispatch({
             type: "updateFinished"
           })
-        }
+          
+          // should navigate to the DisplayTodayTasks screen or DisplayTasks screen
+          let today = new Date().toDateString();
+          if (relevantDay == today) {
+            navigation.navigate("Tasks Stack");
+          } else {
+            navigation.navigate("Tasks Stack", {screen : 'TO -Do'});
+          }
+        })();
       }
         
       /*  longTermTasks.map(async (row) => {
@@ -269,7 +307,7 @@ const TaskAddingScreen = ({navigation}) => {
         setToDay('- - -');
       }
      
-      console.log("running here")
+      // console.log("running here")
 
   return (
     <SafeAreaView style={styles.container}>
