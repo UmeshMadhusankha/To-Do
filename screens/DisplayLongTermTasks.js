@@ -93,8 +93,10 @@ const styles = {
     fontSize: 20
   },
   top_bar : {
-    height: 25,
+    height: 30,
     display: 'flex',
-    alignItems: 'flex-end'
+    flexDirection: 'row',
+    alignItems: 'center',
+    position: 'relative'
   }
 };
