@@ -27,6 +27,13 @@ const AboutScreen = ({navigation}) => {
 export default AboutScreen
 
 const styles = {
+    back: {
+        fontSize : 15,
+        paddingHorizontal : 10,
+        paddingVertical : 5,
+        backgroundColor : "#ddd",
+        borderRadius : 5
+    },
     about_topics : {
         textAlign : 'center',
         fontSize : 25,

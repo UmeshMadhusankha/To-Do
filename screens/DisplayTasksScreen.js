@@ -69,6 +69,13 @@ const DisplayTasksScreen = ({navigation}) => {
 export default DisplayTasksScreen
 
 const styles = StyleSheet.create({
+  back: {
+    fontSize : 15,
+    paddingHorizontal : 10,
+    paddingVertical : 5,
+    backgroundColor : "#ddd",
+    borderRadius : 5
+  },
   day: {
     fontWeight: 500,
     fontSize: 20
