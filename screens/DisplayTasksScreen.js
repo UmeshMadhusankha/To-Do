@@ -30,12 +30,19 @@ const DisplayTasksScreen = ({navigation}) => {
     // set a date that never can be the same ,so easy to implement the logic
     var currRenderingDate = "Sat Nov 30 2024";
 
+    const dynamicStyle = navigation.canGoBack() ? 
+      {justifyContent : 'space-between'} : {justifyContent : 'flex-end'};
 
   return (
     <SafeAreaView>
-      <View style={styles.top_bar}>
-        <ThreeDots customName={"Todays' Tasks"} customName2={"Long Term Tasks"} customName3={"About"} navigation={navigation}/>
-      </View>
+      <View style={[styles.top_bar,dynamicStyle]}>
+          {navigation.canGoBack() && 
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Text style={styles.back}>Back</Text>
+            </TouchableOpacity>
+          }
+          <ThreeDots customName={'See History'} customName2={"Long Term Tasks"} customName3={"About"} navigation={navigation}/>
+        </View>
       <ScrollView>
       <buttonPropsContext.Provider value = {{setIdOfUpdatingData, setUpdateMode, setTask}}>
       {tasks.map( (item) => {

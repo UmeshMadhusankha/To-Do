@@ -83,7 +83,7 @@ const DisplayTodayTasks = ({navigation}) => {
       loadData();
     },[]);
 
-    let dynamicStyle = navigation.canGoBack() ? 
+    const dynamicStyle = navigation.canGoBack() ? 
       {justifyContent : 'space-between'} : {justifyContent : 'flex-end'};
 
   return (

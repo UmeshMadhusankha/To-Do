@@ -4,11 +4,20 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import ThreeDots from './components/ThreeDots'
 
 const AboutScreen = ({navigation}) => {
+
+    const dynamicStyle = navigation.canGoBack() ? 
+      {justifyContent : 'space-between'} : {justifyContent : 'flex-end'};
+
   return (
     <SafeAreaView>
-      <View style={styles.top_bar}>
-        <ThreeDots customName={"Todays' Tasks"} customName2={"Long Term Tasks"} customName3={"See History"} navigation={navigation}/>
-      </View>
+      <View style={[styles.top_bar,dynamicStyle]}>
+          {navigation.canGoBack() && 
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Text style={styles.back}>Back</Text>
+            </TouchableOpacity>
+          }
+          <ThreeDots customName={'See History'} customName2={"Long Term Tasks"} customName3={"About"} navigation={navigation}/>
+        </View>
       <Text style={styles.about_topics}>Released Version:</Text>
       <Text style={styles.about_text}>v 1.0.0</Text>
     </SafeAreaView>
