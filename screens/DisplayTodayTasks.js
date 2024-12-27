@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 import React, {useEffect} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -83,11 +83,19 @@ const DisplayTodayTasks = ({navigation}) => {
       loadData();
     },[]);
 
+    let dynamicStyle = navigation.canGoBack() ? 
+      {justifyContent : 'space-between'} : {justifyContent : 'flex-end'};
+
   return (
 
     <SafeAreaView>
-        <View style={styles.top_bar}>
-            <ThreeDots customName={'See History'} customName2={"Long Term Tasks"} navigation={navigation}/>
+        <View style={[styles.top_bar,dynamicStyle]}>
+          {navigation.canGoBack() && 
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Text style={styles.back}>Back</Text>
+            </TouchableOpacity>
+          }
+          <ThreeDots customName={'See History'} customName2={"Long Term Tasks"} customName3={"About"} navigation={navigation}/>
         </View>
         <Text style={styles.day}>{today}</Text>
         {todayTasks.map((item) => {
@@ -102,13 +110,22 @@ const DisplayTodayTasks = ({navigation}) => {
 export default DisplayTodayTasks
 
 const styles = {
+  back: {
+    fontSize : 15,
+    paddingHorizontal : 10,
+    paddingVertical : 5,
+    backgroundColor : "#ddd",
+    borderRadius : 5
+  },
   day: {
     fontWeight: 500,
     fontSize: 20
   },
   top_bar : {
-    height: 25,
+    height: 30,
     display: 'flex',
-    alignItems: 'flex-end'
+    flexDirection: 'row',
+    alignItems: 'center',
+    position: 'relative'
   }
 };

@@ -56,7 +56,7 @@ const DisplayLongTermTasks = ({navigation}) => {
 
     <SafeAreaView>
         <View style={styles.top_bar}>
-            <ThreeDots customName={'See History'} customName2={"Todays' Tasks"} navigation={navigation}/>
+            <ThreeDots customName={'See History'} customName2={"Todays' Tasks"} customName3={"About"} navigation={navigation}/>
         </View>
         <Text style={styles.day}>Long Term Tasks</Text>
         {longTasks.map((item) => {

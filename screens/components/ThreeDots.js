@@ -6,7 +6,7 @@ import { seeStoredData } from '../functions/SeeDataBtn';
 import { clearStorage } from '../functions/ClearHistoryBtn';
 import { useDispatch } from 'react-redux';
 
-const ThreeDots = ({customName, customName2, navigation}) => {
+const ThreeDots = ({customName, customName2, customName3, navigation}) => {
 
     const dispatch = useDispatch();
 
@@ -22,6 +22,9 @@ const ThreeDots = ({customName, customName2, navigation}) => {
         else if (customName == 'Long Term Tasks') {
             navigation.navigate('long');
         }
+        else if (customName == 'About') {
+            navigation.navigate('about');
+        }
         else {
             navigation.navigate('today');
         }
@@ -33,7 +36,25 @@ const ThreeDots = ({customName, customName2, navigation}) => {
         }
         else if (customName2 == 'To-Do') {
             navigation.navigate('To-Do');
+        }
+        else if (customName2 == 'About') {
+            navigation.navigate('about');
         } 
+        else {
+            navigation.navigate('today');
+        }
+    }
+
+    const navigateFunction3 = () => {
+        if (customName3 == 'Long Term Tasks') {
+            navigation.navigate('long');
+        }
+        else if (customName3 == 'About') {
+            navigation.navigate('about');
+        } 
+        else if (customName3 == 'See History') {
+            navigation.navigate('To-Do');
+        }
         else {
             navigation.navigate('today');
         }
@@ -92,6 +113,13 @@ const ThreeDots = ({customName, customName2, navigation}) => {
                     onPress={() => navigateFunction2()}
                 >
                     <Text style={styles.button_text}>{customName2}</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    style={[styles.btn]}
+                    onPress={() => navigateFunction3()}
+                >
+                    <Text style={styles.button_text}>{customName3}</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity 
