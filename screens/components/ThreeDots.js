@@ -80,7 +80,9 @@ const ThreeDots = ({customName, customName2, customName3, navigation}) => {
   return (
     <View>
         <View style={styles.dot}>
-            <Pressable onPress={() => setShown(!shown)}
+            <Pressable 
+                onPress={() => setShown(!shown)}
+                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
             >
                 <MaterialCommunityIcons 
                     name='dots-vertical'
@@ -167,7 +169,7 @@ const styles = {
     },
     dot: {
         width: '30',
-        zIndex: 5
+        zIndex: 5,
     },
     overlay: {
         width: '100%',
