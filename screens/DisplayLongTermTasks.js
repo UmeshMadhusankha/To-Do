@@ -90,7 +90,9 @@ const styles = {
   },
   day: {
     fontWeight: 500,
-    fontSize: 20
+    fontSize: 25,
+    margin: 5,
+    textAlign: 'center'
   },
   top_bar : {
     height: 30,
