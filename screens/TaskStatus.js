@@ -104,7 +104,7 @@ const styles = {
   status_container: {
   },
   picker: {
-    width: '75%',
+    width: '90%',
     backgroundColor: 'white',
     margin: 5,
     alignSelf: 'center',
@@ -137,14 +137,15 @@ const styles = {
   btn: {
     backgroundColor: 'cyan',
     padding: 10,
-    width: 55,
+    width: '90%',
     borderWidth: 0.5,
     borderRadius: 10,
     borderColor: '#ddd',
-    margin: 50
+    margin: 50,
   },
   btn_text: {
     textAlign: 'center',
-    fontWeight: 600
+    fontWeight: 600,
+    fontSize: 25
   }
 }
