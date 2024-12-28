@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useSharedState } from '../hooks/useSharedState';
 import { useDispatch,useSelector } from 'react-redux';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const TaskAddingScreen = ({navigation}) => {
   
@@ -312,10 +313,11 @@ const TaskAddingScreen = ({navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-        <Text style={styles.texts}>Add a Task : </Text>
+        <Text style={styles.page_topic}>Add Tasks</Text>
+        <Text style={styles.texts}>Task Name </Text>
         <TextInput 
           style={styles.typing_bar}
-          placeholder='Add a task' 
+          placeholder='Enter Task Name' 
           value={task}
           onChangeText={(input) => setTask(input)}
         />
@@ -353,16 +355,20 @@ const TaskAddingScreen = ({navigation}) => {
         
           <Text style={styles.texts}>Allocated Time Period : </Text>
           <View style={styles.days}>
-            <TouchableOpacity
-              onPress={() => setShowDayPicker1(true)}
-            >
-              <Text style={styles.day_bar}>From : </Text>
-            </TouchableOpacity>
+            <Text style={styles.day_bar}>From : </Text>
             <Text style={styles.day}>{fromDay}</Text>
             <TouchableOpacity
+              style={styles.calender1}
+              onPress={() => setShowDayPicker1(true)}
+            >
+              <MaterialCommunityIcons name='calendar-month-outline' size={25} />
+            </TouchableOpacity>
+            <Text style={styles.day_bar}>To : </Text>
+            <TouchableOpacity
+              style={styles.calender2}
               onPress={() => setShowDayPicker2(true)}
             >
-              <Text style={styles.day_bar}>To : </Text>
+              <MaterialCommunityIcons name='calendar-month-outline' size={25} />
             </TouchableOpacity>
             <Text style={styles.day}>{toDay}</Text>
           </View>
@@ -410,14 +416,43 @@ const TaskAddingScreen = ({navigation}) => {
 export default TaskAddingScreen;
 
 const styles = StyleSheet.create({
+  calender1: {
+    padding: 10,
+    width: '12%',
+    position: 'absolute',
+    top: '22%',
+    left: '85%'
+  },
+  calender2: {
+    padding: 10,
+    width: '12%',
+    position: 'absolute',
+    left: '85%',
+    top: '72%',
+    zIndex: 5,
+  },
+  page_topic: {
+    fontSize: 25,
+    fontWeight: 600,
+    textAlign: 'center',
+    padding: 10
+  },
   inputs: {
 
   },
   day: {
-    margin: 20
+    margin: 10,
+    marginTop: 5,
+    padding: 15,
+    backgroundColor: '#ddd',
+    height: 50,
+    borderRadius: 10,
+    fontSize: 15
   },
   day_bar: {
-    margin: '10'
+    margin: '10',
+    marginLeft: 50,
+    fontSize: 15
   },
   long_term: {
     width: '40%'
@@ -427,8 +462,9 @@ const styles = StyleSheet.create({
     width: '100%',
   },
     texts: {
-        fontSize: 18,
-        margin: 10
+        fontSize: 20,
+        margin: 10,
+        fontWeight: 550
     },
     add_button : {
         backgroundColor: '#000',
@@ -465,12 +501,14 @@ const styles = StyleSheet.create({
         backgroundColor: '#fbfbfb',
     },
     typing_bar : {
-        borderBottomWidth: 1,
         borderRadius: 10,
         margin: 10,
-        padding: 10,
+        marginTop: 5,
+        padding: 15,
         width: '95%',
-        height: 40,
+        height: 50,
+        backgroundColor: '#ddd',
+        fontSize: 15
     },
     typing_bar_minutes : {
       borderBottomWidth: 1,
