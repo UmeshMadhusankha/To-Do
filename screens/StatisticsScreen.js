@@ -254,7 +254,8 @@ const styles = {
     padding: 10,
     position: 'relative',
     backgroundColor: 'white',
-    margin: 8
+    margin: 8,
+    borderRadius: 10
   },
   pie_topics: {
     textAlign: 'center',
