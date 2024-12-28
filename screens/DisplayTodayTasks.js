@@ -83,18 +83,18 @@ const DisplayTodayTasks = ({navigation}) => {
       loadData();
     },[]);
 
-    const dynamicStyle = navigation.canGoBack() ? 
-      {justifyContent : 'space-between'} : {justifyContent : 'flex-end'};
+    //const dynamicStyle = navigation.canGoBack() ? 
+    //  {justifyContent : 'space-between'} : {justifyContent : 'flex-end'};
 
   return (
 
     <SafeAreaView>
-        <View style={[styles.top_bar,dynamicStyle]}>
-          {navigation.canGoBack() && 
+        <View style={styles.top_bar}>
+          {/*navigation.canGoBack() && 
             <TouchableOpacity onPress={() => navigation.goBack()}>
               <Text style={styles.back}>Back</Text>
             </TouchableOpacity>
-          }
+          */}
           <ThreeDots customName={'See History'} customName2={"Long Term Tasks"} customName3={"About"} navigation={navigation}/>
         </View>
         <Text style={styles.day}>{today}</Text>
@@ -126,6 +126,7 @@ const styles = {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    position: 'relative'
+    position: 'relative',
+    justifyContent: 'flex-end'
   }
 };

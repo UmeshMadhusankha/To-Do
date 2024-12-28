@@ -30,13 +30,13 @@ const DisplayTasksScreen = ({navigation}) => {
     // set a date that never can be the same ,so easy to implement the logic
     var currRenderingDate = "Sat Nov 30 2024";
 
-    const dynamicStyle = navigation.canGoBack() ? 
-      {justifyContent : 'space-between'} : {justifyContent : 'flex-end'};
+    //const dynamicStyle = navigation.canGoBack() ? 
+    //  {justifyContent : 'space-between'} : {justifyContent : 'flex-end'};
 
   return (
     <SafeAreaView>
-      <View style={[styles.top_bar,dynamicStyle]}>
-          {navigation.canGoBack() && 
+      <View style={styles.top_bar}>
+          {//navigation.canGoBack() && 
             <TouchableOpacity onPress={() => navigation.goBack()}>
               <Text style={styles.back}>Back</Text>
             </TouchableOpacity>
@@ -97,6 +97,7 @@ const styles = StyleSheet.create({
       display: 'flex',
       flexDirection: 'row',
       alignItems: 'center',
-      position: 'relative'
+      position: 'relative',
+      justifyContent: 'space-between'
     }
 });

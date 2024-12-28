@@ -60,7 +60,7 @@ const DisplayLongTermTasks = ({navigation}) => {
 
     <SafeAreaView>
         <View style={[styles.top_bar,dynamicStyle]}>
-          {navigation.canGoBack() && 
+          {//navigation.canGoBack() && 
             <TouchableOpacity onPress={() => navigation.goBack()}>
               <Text style={styles.back}>Back</Text>
             </TouchableOpacity>
@@ -97,6 +97,7 @@ const styles = {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    position: 'relative'
+    position: 'relative',
+    justifyContent: 'space-between'
   }
 };

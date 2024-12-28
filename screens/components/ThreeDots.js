@@ -17,46 +17,82 @@ const ThreeDots = ({customName, customName2, customName3, navigation}) => {
 
     const navigateFunction = () => {
         if (customName == 'See History') {
-            navigation.navigate('To-Do');
+            // navigation.navigate('To-Do');
+            navigation.reset({
+                id : 1,
+                routes : [{name : 'today'},{name : 'To-Do'}]
+            })
         } 
         else if (customName == 'Long Term Tasks') {
-            navigation.navigate('long');
+            // navigation.navigate('long');
+            navigation.reset({
+                id : 1,
+                routes : [{name : 'today'},{name : 'long'}]
+            })
         }
         else if (customName == 'About') {
-            navigation.navigate('about');
+            // navigation.navigate('about');
+            navigation.reset({
+                id : 1,
+                routes : [{name : 'today'},{name : 'about'}]
+            })
         }
         else {
-            navigation.navigate('today');
+            navigation.pop();
         }
     }
 
     const navigateFunction2 = () => {
         if (customName2 == 'Long Term Tasks') {
-            navigation.navigate('long');
+            // navigation.navigate('long');
+            navigation.reset({
+                id : 1,
+                routes : [{name : 'today'},{name : 'long'}]
+            })
         }
         else if (customName2 == 'To-Do') {
-            navigation.navigate('To-Do');
+            // navigation.navigate('To-Do');
+            navigation.reset({
+                id : 1,
+                routes : [{name : 'today'},{name : 'To-Do'}]
+            })
         }
         else if (customName2 == 'About') {
-            navigation.navigate('about');
+            // navigation.navigate('about');
+            navigation.reset({
+                id : 1,
+                routes : [{name : 'today'},{name : 'about'}]
+            })
         } 
         else {
-            navigation.navigate('today');
+            navigation.pop();
         }
     }
 
     const navigateFunction3 = () => {
         if (customName3 == 'Long Term Tasks') {
-            navigation.navigate('long');
+            n// navigation.navigate('long');
+            navigation.reset({
+                id : 1,
+                routes : [{name : 'today'},{name : 'long'}]
+            })
         }
         else if (customName3 == 'About') {
-            navigation.navigate('about');
+            // navigation.navigate('about');
+            navigation.reset({
+                id : 1,
+                routes : [{name : 'today'},{name : 'about'}]
+            })
         } 
         else if (customName3 == 'See History') {
-            navigation.navigate('To-Do');
+            // navigation.navigate('To-Do');
+            navigation.reset({
+                id : 1,
+                routes : [{name : 'today'},{name : 'To-Do'}]
+            })
         }
         else {
-            navigation.navigate('today');
+            navigation.pop();
         }
     }
 
@@ -78,7 +114,7 @@ const ThreeDots = ({customName, customName2, customName3, navigation}) => {
     }
 
   return (
-    <View>
+    <View style={styles.wholeComponent}>
         <View style={styles.dot}>
             <Pressable 
                 onPress={() => setShown(!shown)}
@@ -171,14 +207,16 @@ const styles = {
         width: '30',
         zIndex: 5,
     },
+    wholeComponent: {
+    },
     overlay: {
         width: '100%',
         height: 150,
         position: 'relative',
-        top: 25,
+        /*top: 25,*/
         display: 'flex',
         alignItems: 'flex-end',
-        zIndex: 1    
+        zIndex: 1   ,
     },
     opts: {
         backgroundColor: 'transparent',
@@ -186,7 +224,8 @@ const styles = {
         borderRadius: 10,
         width: '150',
         height: '100%',
-        position: 'absolute'
+        position: 'absolute',
+        top: 27
     },
     mod_correct: {
         width: '100%',
