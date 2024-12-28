@@ -28,20 +28,21 @@ export default AboutScreen
 
 const styles = {
     back: {
-        fontSize : 15,
-        paddingHorizontal : 10,
-        paddingVertical : 5,
-        backgroundColor : "#ddd",
-        borderRadius : 5
+      fontSize : 17,
+      paddingHorizontal : 25,
+      paddingVertical : 4,
+      backgroundColor : "#ddd",
+      borderRadius : 5
     },
     about_topics : {
         textAlign : 'center',
         fontSize : 25,
-        padding: 10
+        padding: 10,
+        fontWeight: 500
     },
     about_text : {
         textAlign : 'center',
-        fontSize : 15,
+        fontSize : 17,
     },
     top_bar : {
         height: 30,
@@ -50,5 +51,5 @@ const styles = {
         alignItems: 'center',
         position: 'relative',
         justifyContent: 'space-between'
-      }
+    }
 }
