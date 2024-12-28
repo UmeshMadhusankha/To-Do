@@ -321,18 +321,11 @@ const TaskAddingScreen = ({navigation}) => {
           value={task}
           onChangeText={(input) => setTask(input)}
         />
-        <View style={styles.switch}>
-          <Text style={[styles.texts, styles.long_term]}>Long Term Work : </Text>
-          <Switch 
-            value={enabled}
-            onValueChange={() => toggleSwitch()}
-          />
-        </View>
         {!enabled ? 
         <>  
           <View style={styles.times}>
             <View style={styles.inputs}>
-            <Text style={styles.texts}>Allocated Time : </Text>
+            <Text style={styles.texts}>Allocated Time </Text>
               <TextInput 
                 style={styles.typing_bar_hours}
                 placeholder='hours' 
@@ -396,6 +389,15 @@ const TaskAddingScreen = ({navigation}) => {
           )}
         </>
         }
+
+        <View style={styles.switch}>
+          <Text style={[styles.texts, styles.long_term]}>Long Term Work : </Text>
+          <Switch 
+            value={enabled}
+            onValueChange={() => toggleSwitch()}
+          />
+        </View>
+
         <Pressable 
           style={[styles.add_button, !task && styles.add_button_disable, task && isPressed && styles.pressed_add_button]}
           hitSlop={5}
@@ -406,7 +408,7 @@ const TaskAddingScreen = ({navigation}) => {
               else handleSubmit(task);
           }}
         >
-          <Text style={[styles.button_text, isPressed && styles.pressed_button_text]}>Add</Text>
+          <Text style={[styles.button_text, isPressed && styles.pressed_button_text]}>+ Add Task</Text>
         </Pressable>
       </ScrollView>
     </SafeAreaView>
@@ -432,7 +434,7 @@ const styles = StyleSheet.create({
     zIndex: 5,
   },
   page_topic: {
-    fontSize: 25,
+    fontSize: 28,
     fontWeight: 600,
     textAlign: 'center',
     padding: 10
@@ -467,13 +469,10 @@ const styles = StyleSheet.create({
         fontWeight: 550
     },
     add_button : {
-        backgroundColor: '#000',
+        backgroundColor: '#4287f5',
         borderRadius: 10,
-        width: '25%',
-        height: 40,
-        // position: 'relative',
-        // top: -50,
-        // left: '85%',
+        width: '95%',
+        height: 50,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -481,11 +480,11 @@ const styles = StyleSheet.create({
         marginTop: 30
     },
     add_button_disable : {
-        backgroundColor: 'grey'
+        backgroundColor: '#78879e'
     },
     button_text : {
         color: 'whitesmoke',
-        fontSize: 25,
+        fontSize: 23,
         fontWeight: 500
     },
     pressed_add_button : {
