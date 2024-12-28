@@ -7,8 +7,8 @@ import { useSelector } from 'react-redux';
 const StatisticsScreen = () => {
 
   // variables for pie chart
-  const widthAndHeight = 240;
-  const sliceColor = ['rgba(0, 255, 255, 0.5)', 'rgba(0, 255, 0, 0.5)','rgba(255, 0, 0, 0.5)','gray']
+  const widthAndHeight = 225;
+  const sliceColor = ['rgba(0, 255, 255, 0.7)', 'rgba(0, 255, 0, 0.5)','rgba(255, 0, 0, 0.5)','gray']
 
   const tasks = useSelector((state) => state.tasks);
 
@@ -124,6 +124,23 @@ const StatisticsScreen = () => {
             <Text style={styles.stat_text1}>{totalTodayTasks == 0 ? 0 : Math.trunc((completedTodayTasks/totalTodayTasks) * 100)}</Text>
             <Text style={styles.stat_text2}>percent</Text>
           </View>
+          <View style={[styles.descriptions, {top: 90}]}>
+            <View style={styles.inline}>
+              <View style={styles.sq1} />
+              <Text style={styles.inline_text}>On Going</Text>
+            </View>
+            <Text style={styles.number}>{onGoingTodayTasks}</Text>
+            <View style={styles.inline}>
+              <View style={styles.sq2} />
+              <Text style={styles.inline_text}>Completed</Text>
+            </View>
+            <Text style={styles.number}>{completedTodayTasks}</Text>
+            <View style={styles.inline}>
+              <View style={styles.sq3} />
+              <Text style={styles.inline_text}>Failed</Text>
+            </View>
+            <Text style={styles.number}>{failedTodayTasks}</Text>
+          </View>
         </View>
 
         <View style={styles.pie_container1}>
@@ -138,6 +155,23 @@ const StatisticsScreen = () => {
           <View style={styles.stat1}>
             <Text style={styles.stat_text1}>{totalWeekTasks == 0 ? 0 : Math.trunc((completedWeekTasks/totalWeekTasks) * 100)}</Text>
             <Text style={styles.stat_text2}>percent</Text>
+          </View>
+          <View style={[styles.descriptions, {top: 90}]}>
+            <View style={styles.inline}>
+              <View style={styles.sq1} />
+              <Text style={styles.inline_text}>On Going</Text>
+            </View>
+            <Text style={styles.number}>{onGoingWeekTasks}</Text>
+            <View style={styles.inline}>
+              <View style={styles.sq2} />
+              <Text style={styles.inline_text}>Completed</Text>
+            </View>
+            <Text style={styles.number}>{completedWeekTasks}</Text>
+            <View style={styles.inline}>
+              <View style={styles.sq3} />
+              <Text style={styles.inline_text}>Failed</Text>
+            </View>
+            <Text style={styles.number}>{failedWeekTasks}</Text>
           </View>
         </View>
 
@@ -154,6 +188,23 @@ const StatisticsScreen = () => {
             <Text style={styles.stat_text1}>{totalLongTermTasks == 0 ? 0 : Math.trunc((completedLongTermTasks/totalLongTermTasks) * 100)}</Text>
             <Text style={styles.stat_text2}>percent</Text>
           </View>
+          <View style={[styles.descriptions, {top: 90}]}>
+            <View style={styles.inline}>
+              <View style={styles.sq1} />
+              <Text style={styles.inline_text}>On Going</Text>
+            </View>
+            <Text style={styles.number}>{onGoingLongTermTasks}</Text>
+            <View style={styles.inline}>
+              <View style={styles.sq2} />
+              <Text style={styles.inline_text}>Completed</Text>
+            </View>
+            <Text style={styles.number}>{completedLongTermTasks}</Text>
+            <View style={styles.inline}>
+              <View style={styles.sq3} />
+              <Text style={styles.inline_text}>Failed</Text>
+            </View>
+            <Text style={styles.number}>{failedLongTermTasks}</Text>
+          </View>
         </View>
 
       </ScrollView>
@@ -164,12 +215,46 @@ const StatisticsScreen = () => {
 export default StatisticsScreen
 
 const styles = {
+  number: {
+    padding: 10,
+    fontSize: 15,
+    marginLeft: 40
+  },
+  inline_text: {
+    paddingInline: 10,
+    fontSize: 15
+  },
+  inline: {
+    display: 'flex',
+    flexDirection: 'row'
+  },
+  sq1: {
+    width: 20,
+    height: 20,
+    backgroundColor: 'rgba(0, 255, 255, 0.7)'
+  },
+  sq2: {
+    width: 20,
+    height: 20,
+    backgroundColor: 'rgba(0, 255, 0, 0.5)'
+  },
+  sq3: {
+    width: 20,
+    height: 20,
+    backgroundColor: 'rgba(255, 0, 0, 0.5)'
+  },
+  descriptions: {
+    width: 130,
+    position: 'absolute',
+    right: 5
+  },
   pie_container1 : {
     flex: 1,
     alignItems: 'center',
     padding: 10,
     position: 'relative',
-    borderBottomWidth: 2
+    backgroundColor: 'white',
+    margin: 8
   },
   pie_topics: {
     textAlign: 'center',
@@ -178,14 +263,17 @@ const styles = {
     padding: 10
   },
   pie1: {
-    margin: 10
+    margin: 10,
+    position: 'relative',
+    right: 70
   },
   stat1: {
     backgroundColor: '#eee',
     width: '180',
     height: '180',
     position: 'absolute',
-    top: 100,
+    top: 91,
+    left: 29,
     justifyContent: 'center',
     borderRadius: 100,
   },
