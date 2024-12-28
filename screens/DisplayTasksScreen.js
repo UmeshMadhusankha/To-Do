@@ -78,7 +78,9 @@ const styles = StyleSheet.create({
   },
   day: {
     fontWeight: 500,
-    fontSize: 20
+    fontSize: 25,
+    marginVertical: 10,
+    marginLeft: 2
   },
     clear_button : {
       backgroundColor: 'red',
