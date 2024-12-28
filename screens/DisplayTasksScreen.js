@@ -41,7 +41,7 @@ const DisplayTasksScreen = ({navigation}) => {
               <Text style={styles.back}>Back</Text>
             </TouchableOpacity>
           }
-          <ThreeDots customName={'See History'} customName2={"Long Term Tasks"} customName3={"About"} navigation={navigation}/>
+          <ThreeDots customName={'Today Tasks'} customName2={"Long Term Tasks"} customName3={"About"} navigation={navigation}/>
         </View>
       <ScrollView>
       <buttonPropsContext.Provider value = {{setIdOfUpdatingData, setUpdateMode, setTask}}>

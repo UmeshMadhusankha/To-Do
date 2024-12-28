@@ -65,7 +65,7 @@ const DisplayLongTermTasks = ({navigation}) => {
               <Text style={styles.back}>Back</Text>
             </TouchableOpacity>
           }
-          <ThreeDots customName={'See History'} customName2={"Long Term Tasks"} customName3={"About"} navigation={navigation}/>
+          <ThreeDots customName={'See History'} customName2={"Today Tasks"} customName3={"About"} navigation={navigation}/>
         </View>
         <Text style={styles.day}>Long Term Tasks</Text>
         {longTasks.map((item) => {
