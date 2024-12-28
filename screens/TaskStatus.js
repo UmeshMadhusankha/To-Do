@@ -105,9 +105,9 @@ const styles = {
   },
   picker: {
     width: '75%',
-    backgroundColor: '#ddd',
+    backgroundColor: 'white',
     margin: 5,
-    alignSelf: 'center' 
+    alignSelf: 'center',
   },
   btn_container: {
     width: '100%',
@@ -120,11 +120,16 @@ const styles = {
   },
   topics: {
     fontWeight: '600',
-    fontSize: 20,
+    fontSize: 25,
     marginTop: 50
   },
   task_style: {
-    fontSize: 20
+    fontSize: 20,
+    backgroundColor: 'white',
+    width: '90%',
+    alignSelf: 'center',
+    padding: 12,
+    borderRadius: 10
   },
   status_style: {
     marginTop: 50
