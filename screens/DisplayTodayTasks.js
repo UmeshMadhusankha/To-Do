@@ -97,7 +97,7 @@ const DisplayTodayTasks = ({navigation}) => {
           */}
           <ThreeDots customName={'See History'} customName2={"Long Term Tasks"} customName3={"About"} navigation={navigation}/>
         </View>
-        <Text style={styles.day}>{today}</Text>
+        <Text style={styles.day}>Today Tasks</Text>
         {todayTasks.map((item) => {
             return (
                 <DisplayTasks backScreen={'today'} key={item.id} task={item.value.task} time={item.value.time} id={item.id} status={item.value.status} navigation={navigation} isLong={0}/>
@@ -118,8 +118,10 @@ const styles = {
     borderRadius : 5
   },
   day: {
-    fontWeight: 500,
-    fontSize: 20
+    fontWeight: 600,
+    fontSize: 25, 
+    textAlign: 'center',
+    padding: 10
   },
   top_bar : {
     height: 30,

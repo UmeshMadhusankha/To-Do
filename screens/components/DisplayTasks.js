@@ -40,13 +40,12 @@ export default DisplayTasks;
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "#D4F6FF",
-        padding: 8,
+        padding: 10,
         flexDirection: 'row',
-        marginBottom: 3,
-        borderRadius: 10
+        marginBottom: 5,
+        borderRadius: 20,
     },
-    container1: {backgroundColor: "rgba(0, 255, 255, 0.1)"},
+    container1: {backgroundColor: "rgba(0, 255, 255, 0.2)"},
     container2 : {backgroundColor: "rgba(0, 255, 0, 0.3)"},
     container3: {backgroundColor: "rgba(255, 0, 0, 0.3)"},
     button_container: {
@@ -59,8 +58,9 @@ const styles = StyleSheet.create({
     },
     text : {
         padding: 10,
-        width: '72%',
+        width: '95%',
         marginRight: 2,
+        fontSize: 18
     },
     del : {
         marginRight: 0
