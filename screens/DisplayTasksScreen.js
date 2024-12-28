@@ -70,9 +70,9 @@ export default DisplayTasksScreen
 
 const styles = StyleSheet.create({
   back: {
-    fontSize : 15,
-    paddingHorizontal : 10,
-    paddingVertical : 5,
+    fontSize : 17,
+    paddingHorizontal : 25,
+    paddingVertical : 4,
     backgroundColor : "#ddd",
     borderRadius : 5
   },

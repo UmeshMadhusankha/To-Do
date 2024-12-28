@@ -122,7 +122,7 @@ const ThreeDots = ({customName, customName2, customName3, navigation}) => {
             >
                 <MaterialCommunityIcons 
                     name='dots-vertical'
-                    size={25}
+                    size={30}
                 />
             </Pressable>
         </View>
