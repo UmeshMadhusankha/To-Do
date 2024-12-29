@@ -226,7 +226,6 @@ const ThreeDots = ({customName, customName2, customName3, customName4, navigatio
                 >
                     <Text style={styles.button_text}>Clear History</Text>
                 </TouchableOpacity>
-        <Button title="See data" onPress={() => {seeStoredData(tasks,longTasks)}}></Button>
             </View>
         </View>
         <Pressable 
@@ -239,6 +238,7 @@ const ThreeDots = ({customName, customName2, customName3, customName4, navigatio
 }
 
 // Removed the See Data button to deliver the production
+{/* <Button title="See data" onPress={() => {seeStoredData(tasks,longTasks)}}></Button> */}
 
 export default ThreeDots
 
@@ -247,6 +247,9 @@ const styles = {
         backgroundColor: '#ddd',
         padding: 12,
         borderRadius: 10,
+        padding: 20,
+        borderBottomWidth: 2,
+        borderColor: 'white'
     },
     // clear_pressed: {
     //     backgroundColor: '#fff'
@@ -258,7 +261,8 @@ const styles = {
     //     backgroundColor: '#fff'
     // },
     button_text: {
-        fontWeight: 700,
+        fontWeight: 650,
+        fontSize: 15,
         textAlign: 'center'
     },
     dot: {
@@ -277,11 +281,11 @@ const styles = {
         zIndex: 1   ,
     },
     opts: {
-        backgroundColor: 'transparent',
+        backgroundColor: '#ddd',
         marginRight: 2,
-        borderRadius: 10,
-        width: '150',
-        height: '100%',
+        borderRadius: 20,
+        width: '170',
+        height: '250',
         position: 'absolute',
         top: 27
     },
