@@ -6,6 +6,7 @@ import DisplayTasks from './components/DisplayTasks';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ThreeDots from './components/ThreeDots';
 import Empty from './components/Empty';
+import Loading from './components/Loading';
 
 let firstLoad = true;
 
