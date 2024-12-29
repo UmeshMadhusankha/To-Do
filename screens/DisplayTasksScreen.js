@@ -7,6 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import DisplayTasks from './components/DisplayTasks';
 import { useDispatch, useSelector } from 'react-redux';
 import ThreeDots from './components/ThreeDots';
+import Empty from './components/Empty';
 
 export const buttonPropsContext = createContext();
 
@@ -29,6 +30,7 @@ const DisplayTasksScreen = ({navigation}) => {
 
     // set a date that never can be the same ,so easy to implement the logic
     var currRenderingDate = "Sat Nov 30 2024";
+    let pastTasks = 0;
 
     //const dynamicStyle = navigation.canGoBack() ? 
     //  {justifyContent : 'space-between'} : {justifyContent : 'flex-end'};
@@ -51,6 +53,7 @@ const DisplayTasksScreen = ({navigation}) => {
         let itemDate = item.value.date;
         if (currRenderingDate != itemDate && (new Date(itemDate) < now)) {
           currRenderingDate = item.value.date;
+          pastTasks++;
           return (
             <Fragment key={`date-${item.id}`}>
               <Text style={styles.day}>{currRenderingDate}</Text>
@@ -59,12 +62,14 @@ const DisplayTasksScreen = ({navigation}) => {
           )
         } 
         else if (currRenderingDate == itemDate) {
+          pastTasks++;
         return (
           <DisplayTasks backScreen={'To-Do'} key={item.id} task={item.value.task} id={item.id} navigation={navigation} isLong={0} day={item.value.date}/>
         );}
       })}
       </buttonPropsContext.Provider>
       </ScrollView>
+      {pastTasks == 0 && <Empty />}
     </SafeAreaView>
   )
 }

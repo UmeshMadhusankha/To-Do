@@ -5,6 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import DisplayTasks from './components/DisplayTasks';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ThreeDots from './components/ThreeDots';
+import Empty from './components/Empty';
 
 let firstLoad = true;
 
@@ -105,6 +106,7 @@ const DisplayTodayTasks = ({navigation}) => {
                 <DisplayTasks backScreen={'today'} key={item.id} task={item.value.task} id={item.id} status={item.value.status} navigation={navigation} isLong={0} day={item.value.date}/>
             )
         })}
+        {todayTasks.length == 0 && <Empty />}
     </SafeAreaView>
   )
 }

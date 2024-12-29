@@ -26,6 +26,9 @@ export default function App() {
             tabBarActiveBackgroundColor: "cyan",
             tabBarActiveTintColor: "#000",
             headerShown: false,
+            tabBarStyle: {
+              height: 65
+            }
           }}
         >
           <Tab.Screen name="Tasks Stack" component={DisplayTasksStack} 

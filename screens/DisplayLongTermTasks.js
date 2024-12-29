@@ -5,6 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import DisplayTasks from './components/DisplayTasks';
 import ThreeDots from './components/ThreeDots';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Empty from './components/Empty';
 
 const DisplayLongTermTasks = ({navigation}) => {
 
@@ -74,6 +75,7 @@ const DisplayLongTermTasks = ({navigation}) => {
               <DisplayTasks backScreen={'long'} key={item.id} task={item.value.task} id={item.id} status={item.value.status} navigation={navigation} fromDay={item.value.fromDay} toDay={item.value.toDay} isLong={1}/>
           )
         })}
+        {longTasks.length == 0 && <Empty />}
     </SafeAreaView>
   )                              
 }
