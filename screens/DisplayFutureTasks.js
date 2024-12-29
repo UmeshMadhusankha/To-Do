@@ -23,7 +23,7 @@ const DisplayFutureTasks = ({navigation}) => {
     <SafeAreaView>
         <View style={[styles.top_bar,{justifyContent : 'space-between'}]}>
           {//navigation.canGoBack() && 
-            <TouchableOpacity onPress={() => navigation.goBack()}>
+            <TouchableOpacity onPress={() => navigation.pop()}>
               <Text style={styles.back}>Back</Text>
             </TouchableOpacity>
           }

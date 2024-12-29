@@ -52,7 +52,7 @@ const TaskStatus = ({navigation, route}) => {
   const navigator = () => {
     //console.log(backScreen)
     if(backScreen) {
-      navigation.navigate(backScreen)
+      navigation.pop();
     }
     else {
       console.error("couldnt")

@@ -120,8 +120,8 @@ const TaskAddingScreen = ({navigation}) => {
 
     
     const handleSubmit = async (task) => {
-      console.log("handling submit")
-      console.log(enabled, isAnUpdate)
+      // console.log("handling submit")
+      // console.log(enabled, isAnUpdate)
   
       // Entering a new long term task
       if (enabled && isAnUpdate == 0) {
