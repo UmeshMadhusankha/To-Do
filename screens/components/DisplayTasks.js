@@ -4,7 +4,7 @@ import DeleteButton from './DeleteButton';
 import EditButton from './EditButton';
 import { useSelector } from 'react-redux';
 
-const DisplayTasks = ({id, task, time, status, backScreen, navigation, fromDay, toDay, isLong}) => {
+const DisplayTasks = ({id, task, status, backScreen, navigation, fromDay, toDay, isLong}) => {
 
   const tasks = useSelector((state) => state.tasks);
   const longTasks = useSelector((state) => state.longTermTasks);

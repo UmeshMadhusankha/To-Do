@@ -12,7 +12,7 @@ export default function reducer(state=[],action) {
                     value : {
                         task : action.payload.task,
                         date : action.payload.date, 
-                        time : action.payload.time,
+                        // time : action.payload.time,
                         status : action.payload.status
                     }
                 }
@@ -27,7 +27,8 @@ export default function reducer(state=[],action) {
                     value: {
                         ...row.value,
                         task: action.payload.task,
-                        time: action.payload.time
+                        // time: action.payload.time
+                        date: action.payload.date
                     }
                 } : row
             );

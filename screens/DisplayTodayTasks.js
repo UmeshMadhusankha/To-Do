@@ -10,6 +10,8 @@ let firstLoad = true;
 
 const DisplayTodayTasks = ({navigation}) => {
 
+  // check future tasks if they must added for today
+
     const tasks = useSelector((store) => store.tasks);
     const today = new Date().toDateString();
     const todayTasks = tasks.filter((row) => row.value.date == today);
@@ -26,9 +28,9 @@ const DisplayTodayTasks = ({navigation}) => {
           const allKeys = await AsyncStorage.getAllKeys();
           const sortedKeys = allKeys.sort();
           // extract only normal tasks
-          const ordinaryTasksKeys = sortedKeys.filter((key) => !isNaN(key));
+          const ordinaryTasksKeys = sortedKeys.filter((key) => !isNaN(key) || (isNaN(key) && key.includes("f")));
           const ordinaryData = await AsyncStorage.multiGet(ordinaryTasksKeys);
-          const longTasksKeys = sortedKeys.filter((key) => isNaN(key));
+          const longTasksKeys = sortedKeys.filter((key) => isNaN(key) && key.includes("L"));
           const longData = await AsyncStorage.multiGet(longTasksKeys);
   
           const loadedOrdinaryData = ordinaryData.map(([key,value]) => {
@@ -57,7 +59,7 @@ const DisplayTodayTasks = ({navigation}) => {
                 task : obj.value.task,
                 id : obj.id,
                 date: obj.value.date,
-                time: obj.value.time,
+                // time: obj.value.time,
                 status: obj.value.status
               }
             }))
@@ -95,12 +97,12 @@ const DisplayTodayTasks = ({navigation}) => {
               <Text style={styles.back}>Back</Text>
             </TouchableOpacity>
           */}
-          <ThreeDots customName={'See History'} customName2={"Long Term Tasks"} customName3={"About"} navigation={navigation}/>
+          <ThreeDots customName={'See History'} customName2={"Long Term Tasks"} customName3={"About"} customName4={"Sheduled Tasks"} navigation={navigation}/>
         </View>
         <Text style={styles.day}>Today Tasks</Text>
         {todayTasks.map((item) => {
             return (
-                <DisplayTasks backScreen={'today'} key={item.id} task={item.value.task} time={item.value.time} id={item.id} status={item.value.status} navigation={navigation} isLong={0}/>
+                <DisplayTasks backScreen={'today'} key={item.id} task={item.value.task} id={item.id} status={item.value.status} navigation={navigation} isLong={0}/>
             )
         })}
     </SafeAreaView>

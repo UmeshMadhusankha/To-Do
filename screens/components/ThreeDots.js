@@ -6,7 +6,7 @@ import { seeStoredData } from '../functions/SeeDataBtn';
 import { clearStorage } from '../functions/ClearHistoryBtn';
 import { useDispatch } from 'react-redux';
 
-const ThreeDots = ({customName, customName2, customName3, navigation}) => {
+const ThreeDots = ({customName, customName2, customName3, customName4, navigation}) => {
 
     const dispatch = useDispatch();
 
@@ -37,6 +37,12 @@ const ThreeDots = ({customName, customName2, customName3, navigation}) => {
                 routes : [{name : 'today'},{name : 'about'}]
             })
         }
+        else if (customName == 'Sheduled Tasks') {
+            navigation.reset({
+                id : 1,
+                routes : [{name : 'today'},{name : 'future'}]
+            })
+        }
         else {
             navigation.pop();
         }
@@ -64,6 +70,12 @@ const ThreeDots = ({customName, customName2, customName3, navigation}) => {
                 routes : [{name : 'today'},{name : 'about'}]
             })
         } 
+        else if (customName2 == 'Sheduled Tasks') {
+            navigation.reset({
+                id : 1,
+                routes : [{name : 'today'},{name : 'future'}]
+            })
+        }
         else {
             navigation.pop();
         }
@@ -89,6 +101,45 @@ const ThreeDots = ({customName, customName2, customName3, navigation}) => {
             navigation.reset({
                 id : 1,
                 routes : [{name : 'today'},{name : 'To-Do'}]
+            })
+        }
+        else if (customName3 == 'Sheduled Tasks') {
+            navigation.reset({
+                id : 1,
+                routes : [{name : 'today'},{name : 'future'}]
+            })
+        }
+        else {
+            navigation.pop();
+        }
+    }
+
+    const navigateFunction4 = () => {
+        if (customName4 == 'Long Term Tasks') {
+            // navigation.navigate('long');
+            navigation.reset({
+                id : 1,
+                routes : [{name : 'today'},{name : 'long'}]
+            })
+        }
+        else if (customName4 == 'About') {
+            // navigation.navigate('about');
+            navigation.reset({
+                id : 1,
+                routes : [{name : 'today'},{name : 'about'}]
+            })
+        } 
+        else if (customName4 == 'See History') {
+            // navigation.navigate('To-Do');
+            navigation.reset({
+                id : 1,
+                routes : [{name : 'today'},{name : 'To-Do'}]
+            })
+        }
+        else if (customName4 == 'Sheduled Tasks') {
+            navigation.reset({
+                id : 1,
+                routes : [{name : 'today'},{name : 'future'}]
             })
         }
         else {
@@ -158,6 +209,13 @@ const ThreeDots = ({customName, customName2, customName3, navigation}) => {
                     onPress={() => navigateFunction3()}
                 >
                     <Text style={styles.button_text}>{customName3}</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    style={[styles.btn]}
+                    onPress={() => navigateFunction4()}
+                >
+                    <Text style={styles.button_text}>{customName4}</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity 

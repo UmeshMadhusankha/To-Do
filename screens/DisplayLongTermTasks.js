@@ -24,7 +24,7 @@ const DisplayLongTermTasks = ({navigation}) => {
         try {
           const allKeys = await AsyncStorage.getAllKeys();
           const sortedKeys = allKeys.sort();
-          const longKeys = sortedKeys.filter((key) => isNaN(key));
+          const longKeys = sortedKeys.filter((key) => isNaN(key) && key.includes("L"));
           const allLongData = await AsyncStorage.multiGet(longKeys);
 
           const loadedLongData = allLongData.map(([key,value]) => {
@@ -65,7 +65,7 @@ const DisplayLongTermTasks = ({navigation}) => {
               <Text style={styles.back}>Back</Text>
             </TouchableOpacity>
           }
-          <ThreeDots customName={'See History'} customName2={"Today Tasks"} customName3={"About"} navigation={navigation}/>
+          <ThreeDots customName={'See History'} customName2={"Today Tasks"} customName3={"About"} customName4={"Sheduled Tasks"} navigation={navigation}/>
         </View>
         <Text style={styles.day}>Long Term Tasks</Text>
         {longTasks.map((item) => {

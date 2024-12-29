@@ -50,7 +50,7 @@ const TaskStatus = ({navigation, route}) => {
   },[selectedValue]);
 
   const navigator = () => {
-    console.log(backScreen)
+    //console.log(backScreen)
     if(backScreen) {
       navigation.navigate(backScreen)
     }

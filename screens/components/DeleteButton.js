@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 const DeleteButton = ({ style, id }) => {
 
   let dispatch = useDispatch();
+  console.log("Clicked")
 
   return (
     <View style={styles.container}>

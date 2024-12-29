@@ -39,7 +39,12 @@ const TaskAddingScreen = ({navigation}) => {
   const [showDayPicker1,setShowDayPicker1] = useState(false);
   const [showDayPicker2,setShowDayPicker2] = useState(false);
 
+  const [ordinaryTaskDay, setOrdinaryTaskDay] = useState(new Date().toDateString());
+  const [showOrdinaryDayPicker,setShowOrdinaryDayPicker] = useState(false);
+
   const [firstRender,setFirstRender] = useState(true);
+
+  // console.log(showOrdinaryDayPicker);
 
   useEffect(() => {
     setShowDayPicker1(false)
@@ -88,19 +93,21 @@ const TaskAddingScreen = ({navigation}) => {
         if (ordinaryTask.id == idOfUpdatingData) {
           // console.log("setting up to update ordinary task")
           const task = ordinaryTask.value.task;
-          const time = ordinaryTask.value.time;
+          //const time = ordinaryTask.value.time;
           //console.log(ordinaryTask.value)
           //console.log(typeof(time), time)
-          const hours = Math.floor(time / 60);
-          const minutes = time % 60;
+          //const hours = Math.floor(time / 60);
+          //const minutes = time % 60;
           //console.log(hours, minutes)
           //console.log(typeof(hours),typeof(minutes))
+          const date = ordinaryTask.value.date;
 
           if (firstRender === true) {
             //console.log("running")
             setTask(task);
-            setHours(`${hours}`);
-            setMinutes(`${minutes}`);
+            // setHours(`${hours}`);
+            // setMinutes(`${minutes}`);
+            setOrdinaryTaskDay(date);
             setFirstRender(false);
           }
 
@@ -161,44 +168,80 @@ const TaskAddingScreen = ({navigation}) => {
       // Entering a new ordinary task
       else if (!enabled && isAnUpdate == 0) {
         // setting a key explicitly
+        
         try {
 
           const numOfKeys = await AsyncStorage.getAllKeys();
           const numericKeys = numOfKeys.map(key => parseInt(key)).filter(key => !isNaN(key));
+          const now = new Date().setHours(0,0,0,0);
+          // handling a future date entry
+          if (new Date(ordinaryTaskDay) < now) {
+            // nothing happens if the entered date is a past date
+            return;
+          }
+          else if (new Date(ordinaryTaskDay) > now) {
+            // real addressing problem is this
+            // i will count future tasks and long tasks both 
+            //    bcz ultimately the goal will be fullfilled without 
+            //    more overheadings
+            const nonNumericKeys = numOfKeys.length - numericKeys.length;
+            const nextFutureKey = 'f' + nonNumericKeys;
 
-          // Find the next key
-          const nextKey = numericKeys.length ? Math.max(...numericKeys) + 1 : 1;
+            const valAsJson = JSON.stringify({'task' : task, 'date' : ordinaryTaskDay, 'status' : 1});
 
-          // finding date
-          const today = new Date().toDateString();
-          // console.log("inside new ordinary task adding, ")
-          // console.log(`hours : ${hours}, minutes : ${minutes}`)
-          const timeInMins = parseInt(hours) * 60 + parseInt(minutes);
-          // console.log(typeof(minutes), typeof(hours), typeof(timeInMins))
-          const valAsJson = JSON.stringify({'task' : task, 'date' : today, 'time' : timeInMins, 'status' : 1});
+            // storing data 
+            await AsyncStorage.setItem(`${nextFutureKey}`, valAsJson);
+    
+            dispatch({
+              type: "taskAdded",
+              payload: {
+                id : nextFutureKey,
+                date : ordinaryTaskDay,
+                status: 1,
+                task
+              }
+            })
 
-          // storing data 
-          await AsyncStorage.setItem(`${nextKey}`, valAsJson);
+            navigation.navigate("Tasks Stack", {screen : 'future'});
+          }
+          else {
+            // Find the next key
+            const nextKey = numericKeys.length ? Math.max(...numericKeys) + 1 : 1;
   
-          // not working as intended anymore!
-          // setTasks(prevTasks => [...prevTasks, { id: nextKey, value: { task, date: today } }]);
-          dispatch({
-            type: "taskAdded",
-            payload: {
-              id : nextKey,
-              date : today,
-              time : timeInMins,
-              status: 1,
-              task
-            }
-          })
+            // finding date
+            const today = new Date().toDateString();
+            // console.log("inside new ordinary task adding, ")
+            // console.log(`hours : ${hours}, minutes : ${minutes}`)
+            // const timeInMins = parseInt(hours) * 60 + parseInt(minutes);
+            // console.log(typeof(minutes), typeof(hours), typeof(timeInMins))
+            const valAsJson = JSON.stringify({'task' : task, 'date' : ordinaryTaskDay, 'status' : 1});
+  
+            // storing data 
+            await AsyncStorage.setItem(`${nextKey}`, valAsJson);
+    
+            // not working as intended anymore!
+            // setTasks(prevTasks => [...prevTasks, { id: nextKey, value: { task, date: today } }]);
+            dispatch({
+              type: "taskAdded",
+              payload: {
+                id : nextKey,
+                date : ordinaryTaskDay,
+                // time : timeInMins,
+                status: 1,
+                task
+              }
+            })
+
+            // should navigate to the DisplayTodayTasks screen
+            navigation.navigate("Tasks Stack");
+          }
+
+
 
         } catch (error) {
           console.error(`Error while getting all keys : ${error}`);
         }
 
-        // should navigate to the DisplayTodayTasks screen
-        navigation.navigate("Tasks Stack");
         
       } 
 
@@ -248,13 +291,13 @@ const TaskAddingScreen = ({navigation}) => {
         // console.log("Updating an Ordinary Task");
         
         (async () => {
-          const deletingData = await AsyncStorage.getItem(String(idOfUpdatingData));
-          const deletingDataAsObj = JSON.parse(deletingData);
-          const relevantDay = deletingDataAsObj.date;
+          //const deletingData = await AsyncStorage.getItem(String(idOfUpdatingData));
+          //const deletingDataAsObj = JSON.parse(deletingData);
+          //const relevantDay = deletingDataAsObj.date;
           await AsyncStorage.removeItem(String(idOfUpdatingData));
-          const timeInMins = parseInt(hours) * 60 + parseInt(minutes);
+          //const timeInMins = parseInt(hours) * 60 + parseInt(minutes);
           // jsonify val before store
-          const jsonObjToStore = JSON.stringify({'task' : task, 'date' : relevantDay, 'time' : `${timeInMins}`});
+          const jsonObjToStore = JSON.stringify({'task' : task, 'date' : ordinaryTaskDay});
           await AsyncStorage.setItem(String(idOfUpdatingData), jsonObjToStore);
 
           // updating the redux store
@@ -263,7 +306,7 @@ const TaskAddingScreen = ({navigation}) => {
             payload: {
               id : idOfUpdatingData,
               task : task,
-              time : timeInMins
+              date : ordinaryTaskDay
             }
           })
 
@@ -306,6 +349,7 @@ const TaskAddingScreen = ({navigation}) => {
         // newly added
         setFromDay(new Date().toDateString());
         setToDay('- - -');
+        setOrdinaryTaskDay(new Date().toDateString())
       }
      
       // console.log("running here")
@@ -325,8 +369,8 @@ const TaskAddingScreen = ({navigation}) => {
         <>  
           <View style={styles.times}>
             <View style={styles.inputs}>
-            <Text style={styles.texts}>Allocated Time </Text>
-              <TextInput 
+            <Text style={styles.texts}>Allocated Date </Text>
+              {/* <TextInput 
                 style={styles.typing_bar_hours}
                 placeholder='hours' 
                 keyboardType='numeric'
@@ -339,9 +383,27 @@ const TaskAddingScreen = ({navigation}) => {
                 placeholder='minutes' 
                 value={minutes}
                 onChangeText={(input) => setMinutes(input)}
-              />
+              /> */}
             </View>
           </View>
+          <Text style={styles.day}>{ordinaryTaskDay}</Text>
+            <TouchableOpacity
+              style={styles.calender0}
+              onPress={() => setShowOrdinaryDayPicker(true)}
+            >
+              <MaterialCommunityIcons name='calendar-month-outline' size={25} />
+          </TouchableOpacity>
+          {showOrdinaryDayPicker && (
+            <DateTimePicker 
+              value={new Date()}
+              mode='date'
+              onChange={(event,selectedDate) => {
+                if(selectedDate)
+                  setOrdinaryTaskDay(selectedDate.toDateString())
+                setShowOrdinaryDayPicker(false)
+              }}
+            />
+          )}
         </>
         : 
         <>
@@ -418,6 +480,13 @@ const TaskAddingScreen = ({navigation}) => {
 export default TaskAddingScreen;
 
 const styles = StyleSheet.create({
+  calender0 : {
+    padding: 10,
+    width: '12%',
+    position: 'absolute',
+    top: '54.5%',
+    left: '85%',
+  },
   calender1: {
     padding: 10,
     width: '12%',

@@ -16,7 +16,7 @@ const AboutScreen = ({navigation}) => {
               <Text style={styles.back}>Back</Text>
             </TouchableOpacity>
           }
-          <ThreeDots customName={'See History'} customName2={"Long Term Tasks"} customName3={"Today Tasks"} navigation={navigation}/>
+          <ThreeDots customName={'See History'} customName2={"Long Term Tasks"} customName3={"Today Tasks"} customName4={"Sheduled Tasks"} navigation={navigation}/>
         </View>
       <Text style={styles.about_topics}>Released Version:</Text>
       <Text style={styles.about_text}>v 2.0.0</Text>

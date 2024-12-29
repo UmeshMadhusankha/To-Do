@@ -6,6 +6,7 @@ import DisplayTodayTasks from './DisplayTodayTasks';
 import DisplayLongTermTasks from './DisplayLongTermTasks';
 import AboutScreen from './AboutScreen';
 import { Button } from 'react-native';
+import DisplayFutureTasks from './DisplayFutureTasks';
 
 function DisplayTasksStack() {
 
@@ -26,6 +27,7 @@ function DisplayTasksStack() {
             <Stack.Screen name='Status' component={TaskStatus}/>
             <Stack.Screen name='long' component={DisplayLongTermTasks} />
             <Stack.Screen name='about' component={AboutScreen} />
+            <Stack.Screen name='future' component={DisplayFutureTasks} />
         </Stack.Navigator>
   )
 }
