@@ -37,7 +37,7 @@ const DisplayTodayTasks = ({navigation}) => {
             var jsObj = JSON.parse(value);
             return {
               id : key, 
-              value : {task: jsObj.task, date: jsObj.date, time: jsObj.time, status: jsObj.status}
+              value : {task: jsObj.task, date: jsObj.date, status: jsObj.status}
             }
           });
 

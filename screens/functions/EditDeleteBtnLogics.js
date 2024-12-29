@@ -11,7 +11,7 @@ export const deleteLogic = async (key,dispatch) => {
       await AsyncStorage.removeItem(String(key));
       
       // updating the logic to meet the requirement for deleting long tasks as well
-      if (!isNaN(parseInt(key))) {
+      if (!isNaN(parseInt(key)) || (isNaN(parseInt(key)) && key.includes("f"))) {
         dispatch({
           type: "taskRemoved",
           payload: {
@@ -58,9 +58,9 @@ export const editLogic = (longTask,idOfUpdatingData,navigation,dispatch) => {
   // const dispatch = useDispatch();
   
   // navigate to the tasks adding screen
-  console.log("")
-  console.log("edit logic called")
-  console.log(`longTask : ${longTask}, idOfupdatingData : ${idOfUpdatingData}, `)
+  // console.log("")
+  // console.log("edit logic called")
+  // console.log(`longTask : ${longTask}, idOfupdatingData : ${idOfUpdatingData}, `)
 
   dispatch({
     type: "updateTask",

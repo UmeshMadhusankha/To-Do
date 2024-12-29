@@ -120,6 +120,8 @@ const TaskAddingScreen = ({navigation}) => {
 
     
     const handleSubmit = async (task) => {
+      console.log("handling submit")
+      console.log(enabled, isAnUpdate)
   
       // Entering a new long term task
       if (enabled && isAnUpdate == 0) {
@@ -170,7 +172,6 @@ const TaskAddingScreen = ({navigation}) => {
         // setting a key explicitly
         
         try {
-
           const numOfKeys = await AsyncStorage.getAllKeys();
           const numericKeys = numOfKeys.map(key => parseInt(key)).filter(key => !isNaN(key));
           const now = new Date().setHours(0,0,0,0);
@@ -288,40 +289,115 @@ const TaskAddingScreen = ({navigation}) => {
 
       // Updating a Ordinary Task
       else if (longTask == 0 && isAnUpdate != 0) {
-        // console.log("Updating an Ordinary Task");
+        //console.log("Updating an Ordinary Task");
         
         (async () => {
-          //const deletingData = await AsyncStorage.getItem(String(idOfUpdatingData));
-          //const deletingDataAsObj = JSON.parse(deletingData);
-          //const relevantDay = deletingDataAsObj.date;
-          await AsyncStorage.removeItem(String(idOfUpdatingData));
-          //const timeInMins = parseInt(hours) * 60 + parseInt(minutes);
-          // jsonify val before store
-          const jsonObjToStore = JSON.stringify({'task' : task, 'date' : ordinaryTaskDay});
-          await AsyncStorage.setItem(String(idOfUpdatingData), jsonObjToStore);
-
-          // updating the redux store
-          dispatch({
-            type: "taskEdited",
-            payload: {
-              id : idOfUpdatingData,
-              task : task,
-              date : ordinaryTaskDay
-            }
-          })
-
-          // stating the update is over
-          dispatch({
-            type: "updateFinished"
-          })
-          
-          // should navigate to the DisplayTodayTasks screen or DisplayTasks screen
-          let today = new Date().toDateString();
-          if (relevantDay == today) {
-            navigation.navigate("Tasks Stack");
-          } else {
-            navigation.navigate("Tasks Stack", {screen : 'TO -Do'});
+          let now = new Date().setHours(0,0,0,0);
+          if (new Date(ordinaryTaskDay) < now) {
+            // nothing happens if the entered date is a past date
+            return;
           }
+          else if (new Date(ordinaryTaskDay) > now) {
+            await AsyncStorage.removeItem(String(idOfUpdatingData));
+            
+            dispatch({
+              type: 'taskRemoved',
+              payload: {
+                id: idOfUpdatingData
+              }
+            })
+
+            const numOfKeys = await AsyncStorage.getAllKeys();
+            const numericKeys = numOfKeys.map(key => parseInt(key)).filter(key => !isNaN(key));
+
+            const nonNumericKeys = numOfKeys.length - numericKeys.length;
+            const nextFutureKey = 'f' + nonNumericKeys;
+
+            const valAsJson = JSON.stringify({'task' : task, 'date' : ordinaryTaskDay, 'status' : 1});
+
+            // storing data 
+            await AsyncStorage.setItem(`${nextFutureKey}`, valAsJson);
+    
+            dispatch({
+              type: "taskAdded",
+              payload: {
+                id : nextFutureKey,
+                date : ordinaryTaskDay,
+                status: 1,
+                task
+              }
+            })
+
+            dispatch({
+              type: "updateFinished"
+            })
+
+            navigation.navigate("Tasks Stack", {screen : 'future'});
+          } 
+          else {
+            await AsyncStorage.removeItem(String(idOfUpdatingData));
+            // jsonify val before store
+            const jsonObjToStore = JSON.stringify({'task' : task, 'date' : ordinaryTaskDay});
+
+            // so setted date must be today
+            // but it can be a future task set to today or normal today task
+            if (!isNaN(idOfUpdatingData)) {
+              await AsyncStorage.setItem(String(idOfUpdatingData), jsonObjToStore);
+    
+              // updating the redux store
+              dispatch({
+                type: "taskEdited",
+                payload: {
+                  id : idOfUpdatingData,
+                  task : task,
+                  date : ordinaryTaskDay
+                }
+              })
+            } 
+            else {
+              // future task that updated as today task
+              const numOfKeys = await AsyncStorage.getAllKeys();
+              const numericKeys = numOfKeys.map(key => parseInt(key)).filter(key => !isNaN(key));
+              const nextKey = numericKeys.length ? Math.max(...numericKeys) + 1 : 1; 
+
+              await AsyncStorage.setItem(String(nextKey), jsonObjToStore);
+    
+              // updating the redux store
+              dispatch({
+                type: 'taskRemoved',
+                payload: {
+                  id: idOfUpdatingData
+                }
+              })
+
+              dispatch({
+                type: "taskAdded",
+                payload: {
+                  id : nextKey,
+                  task : task,
+                  status : 1,
+                  date : ordinaryTaskDay
+                }
+              })
+            }
+  
+            // stating the update is over
+            dispatch({
+              type: "updateFinished"
+            })
+            
+            // should navigate to the DisplayTodayTasks screen or DisplayTasks screen
+            let today = new Date().toDateString();
+            let now = new Date().setHours(0,0,0,0);
+            if (ordinaryTaskDay == today) {
+              navigation.navigate("Tasks Stack");
+            } else if (new Date(ordinaryTaskDay) < now) {
+              navigation.navigate("Tasks Stack", {screen : 'TO -Do'});
+            } else {
+              navigation.navigate("Tasks Stack", {screen : 'future'});
+            }
+          }
+
         })();
       }
         
@@ -349,7 +425,8 @@ const TaskAddingScreen = ({navigation}) => {
         // newly added
         setFromDay(new Date().toDateString());
         setToDay('- - -');
-        setOrdinaryTaskDay(new Date().toDateString())
+        setOrdinaryTaskDay(new Date().toDateString());
+        setEnabled(false);
       }
      
       // console.log("running here")
