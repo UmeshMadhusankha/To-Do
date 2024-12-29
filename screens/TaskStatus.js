@@ -8,7 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const TaskStatus = ({navigation, route}) => {
 
   const {taskExist} = route.params;
-  const {taskTime} = route.params;
+  const {ordinaryDay} = route.params;
   const {taskId} = route.params;
   const {taskStatus} = route.params;
   const {backScreen} = route.params;
@@ -72,8 +72,8 @@ const TaskStatus = ({navigation, route}) => {
       </>
       :
       <>
-        <Text style={[styles.texts, styles.topics]}>Time Allocated :</Text>
-        <Text style={[styles.texts, styles.task_style]}>{taskTime ? `${Math.floor(taskTime / 60)} hours ${taskTime % 60} minutes` : 'Did not set'}</Text>
+        <Text style={[styles.texts, styles.topics]}>Date Allocated :</Text>
+        <Text style={[styles.texts, styles.task_style]}>{ordinaryDay}</Text>
       </>
       }
       <Text style={[styles.texts, styles.topics, styles.status_style]}>Status :</Text>

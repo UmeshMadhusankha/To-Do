@@ -4,7 +4,7 @@ import DeleteButton from './DeleteButton';
 import EditButton from './EditButton';
 import { useSelector } from 'react-redux';
 
-const DisplayTasks = ({id, task, status, backScreen, navigation, fromDay, toDay, isLong}) => {
+const DisplayTasks = ({id, day, task, status, backScreen, navigation, fromDay, toDay, isLong}) => {
 
   const tasks = useSelector((state) => state.tasks);
   const longTasks = useSelector((state) => state.longTermTasks);
@@ -24,7 +24,7 @@ const DisplayTasks = ({id, task, status, backScreen, navigation, fromDay, toDay,
     <View style={[styles.container, styles[relevantStyle]]}>
       <TouchableOpacity 
         style={{width: '72%'}}
-        onPress={() => navigation.navigate('Status', {taskExist : task, taskId : id, taskStatus : status, backScreen : backScreen, fromDay : fromDay, toDay : toDay})}
+        onPress={() => navigation.navigate('Status', {taskExist : task, taskId : id, taskStatus : status, backScreen : backScreen, fromDay : fromDay, toDay : toDay, ordinaryDay : day})}
       >
         <Text style={styles.text}>{task}</Text>
       </TouchableOpacity>

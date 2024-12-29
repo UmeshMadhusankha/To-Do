@@ -47,18 +47,21 @@ const DisplayTasksScreen = ({navigation}) => {
       <buttonPropsContext.Provider value = {{setIdOfUpdatingData, setUpdateMode, setTask}}>
       {tasks.map( (item) => {
         // console.log(item, typeof(item));
-        if (currRenderingDate != item.value.date) {
+        let now = new Date().setHours(0,0,0,0);
+        let itemDate = item.value.date;
+        if (currRenderingDate != itemDate && (new Date(itemDate) < now)) {
           currRenderingDate = item.value.date;
           return (
             <Fragment key={`date-${item.id}`}>
               <Text style={styles.day}>{currRenderingDate}</Text>
-              <DisplayTasks backScreen={'To-Do'} key={item.id} task={item.value.task} time={item.value.time} id={item.id} status={item.value.status} navigation={navigation} isLong={0}/>
+              <DisplayTasks backScreen={'To-Do'} key={item.id} task={item.value.task} time={item.value.time} id={item.id} status={item.value.status} navigation={navigation} isLong={0} day={item.value.date}/>
             </Fragment>
           )
-        }
+        } 
+        else if (currRenderingDate == itemDate) {
         return (
-          <DisplayTasks backScreen={'To-Do'} key={item.id} task={item.value.task} id={item.id} navigation={navigation} isLong={0}/>
-        );
+          <DisplayTasks backScreen={'To-Do'} key={item.id} task={item.value.task} id={item.id} navigation={navigation} isLong={0} day={item.value.date}/>
+        );}
       })}
       </buttonPropsContext.Provider>
       </ScrollView>

@@ -33,7 +33,7 @@ const DisplayFutureTasks = ({navigation}) => {
         {futureTasks.map((item) => {
           // if (!item || !item.value) return null;
           return (
-              <DisplayTasks backScreen={'future'} key={item.id} task={item.value.task} id={item.id} status={item.value.status} navigation={navigation} isLong={0}/>
+              <DisplayTasks backScreen={'future'} key={item.id} task={item.value.task} id={item.id} status={item.value.status} navigation={navigation} isLong={0} day={item.value.date}/>
           )
         })}
     </SafeAreaView>
