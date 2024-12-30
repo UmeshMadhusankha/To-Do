@@ -8,7 +8,7 @@
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/loading-screen.png",
+      "image": "./assets/loadingAnimation.json",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

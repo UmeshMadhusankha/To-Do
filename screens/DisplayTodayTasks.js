@@ -77,6 +77,9 @@ const DisplayTodayTasks = ({navigation}) => {
               }
             }))
 
+            // if sheduled tasks' date is today
+            sheduledTasksChecker();
+            
             firstLoad = false;
           }
   
@@ -86,6 +89,52 @@ const DisplayTodayTasks = ({navigation}) => {
       }
       loadData();
     },[]);
+
+    async function sheduledTasksChecker() {
+      for(const obj of loadedOrdinaryData) {
+        if (isNaN(obj.id) && obj.value.date == today) {
+          // remove data and re add data
+          const sheduledTask = obj.value.task;
+          const status = obj.value.status;
+
+          try {
+            // deleting
+            await AsyncStorage.removeItem(String(obj.id));
+
+            dispatch({
+              type: "taskRemoved",
+              payload: {
+                id: obj.id
+              }
+            })
+
+            /*importing logic from task adding screen*/
+            // adding
+
+            const numOfKeys = await AsyncStorage.getAllKeys();
+            const numericKeys = numOfKeys.map(key => parseInt(key)).filter(key => !isNaN(key));
+
+            const nextKey = numericKeys.length ? Math.max(...numericKeys) + 1 : 1;
+
+            const valAsJson = JSON.stringify({'task' : sheduledTask, 'date' : today, 'status' : status});
+
+            await AsyncStorage.setItem(`${nextKey}`, valAsJson);
+
+            dispatch({
+              type: "taskAdded",
+              payload: {
+                id : nextKey,
+                date : today,
+                status: status,
+                task: sheduledTask
+              }
+            })
+
+          } catch (error) {
+            console.error("Error while handling sheduled task to re add it", error);
+          }
+        }
+      }}
 
     //const dynamicStyle = navigation.canGoBack() ? 
     //  {justifyContent : 'space-between'} : {justifyContent : 'flex-end'};
