@@ -39,7 +39,7 @@ const StatisticsScreen = () => {
 
   fallbackValue1 = totalTodayTasks == 0 ? 1 : 0;
   
-  let series1 = [completedTodayTasks, onGoingTodayTasks, failedTodayTasks, fallbackValue1];
+  let series1 = [onGoingTodayTasks, completedTodayTasks, failedTodayTasks, fallbackValue1];
 
 // calculating weeks' success rate
   const previousWeek = [];
@@ -79,7 +79,7 @@ const StatisticsScreen = () => {
 
   fallbackValue2 = totalWeekTasks == 0 ? 1 : 0;
 
-  let series2 = [completedWeekTasks,onGoingWeekTasks,failedWeekTasks,fallbackValue2];
+  let series2 = [onGoingWeekTasks,completedWeekTasks,failedWeekTasks,fallbackValue2];
 
 // calculating long term works' success rate
   const longTermTasks = useSelector((state) => state.longTermTasks);
@@ -105,7 +105,7 @@ const StatisticsScreen = () => {
 
   fallbackValue3 = totalLongTermTasks == 0 ? 1 : 0;
 
-  let series3 = [completedLongTermTasks,onGoingLongTermTasks,failedLongTermTasks,fallbackValue3];
+  let series3 = [onGoingLongTermTasks,completedLongTermTasks,failedLongTermTasks,fallbackValue3];
 
 
   return (
