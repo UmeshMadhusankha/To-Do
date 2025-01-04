@@ -11,6 +11,7 @@ const DisplayLongTermTasks = ({navigation}) => {
 
     const longTasks = useSelector((store) => store.longTermTasks);
     const dispatch = useDispatch();
+    const today = new Date();
 
     //everytime this renders, we want just to update only the redux state
     // to do so we can clear redux store everytime and then re store them one by one
@@ -35,6 +36,29 @@ const DisplayLongTermTasks = ({navigation}) => {
               value : {task: jsObj.longTask, fromDay: jsObj.fromDay, toDay: jsObj.toDay, status: jsObj.status}
             }
           })
+
+          // mark in red if days limit passed
+          for (const obj of loadedLongData) {
+            if (new Date(obj.value.toDay) < today && obj.value.status == 1) {
+              dispatch({
+                type: "longTermTaskStatusUpdated",
+                payload: {
+                  id : obj.id,
+                  status : 3
+                }
+              })
+
+              const toBeStored = {
+                longTask : obj.value.task,
+                fromDay : obj.value.fromDay,
+                toDay : obj.value.toDay,
+                status : 3
+              };
+              const jsonObjLT = JSON.stringify(toBeStored);
+              
+              await AsyncStorage.setItem(`${obj.id}`,jsonObjLT);
+            }
+          }
 
           loadedLongData.forEach(obj => dispatch({
             type: "longTermTaskAdded",

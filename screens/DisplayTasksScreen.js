@@ -14,23 +14,49 @@ export const buttonPropsContext = createContext();
 const DisplayTasksScreen = ({navigation}) => {
   
   const tasks = useSelector((state) => state.tasks);
+  const dispatch = useDispatch();
+  const {
+    /*
+      tasks,
+      setTasks,
+    */
+      task,
+      setTask,
+      updateMode,
+      setUpdateMode,
+      idOfUpdatingData,
+      setIdOfUpdatingData
+  } = useSharedState();
 
-    const {
-      /*
-        tasks,
-        setTasks,
-      */
-        task,
-        setTask,
-        updateMode,
-        setUpdateMode,
-        idOfUpdatingData,
-        setIdOfUpdatingData
-    } = useSharedState();
+  // set a date that never can be the same ,so easy to implement the logic
+  var currRenderingDate = "Sat Nov 30 2024";
+  let pastTasks = 0;
+  const today = new Date().setHours(0,0,0,0);
 
-    // set a date that never can be the same ,so easy to implement the logic
-    var currRenderingDate = "Sat Nov 30 2024";
-    let pastTasks = 0;
+  useEffect(() => {
+    const statusChanger = async() => {
+      for(const item of tasks) {
+        const itemDate = item.value.date;
+        // if not completed mark in red
+        if (new Date(itemDate) < today && item.value.status == 1) { 
+            dispatch({
+              type: "taskStatusUpdated",
+              payload: {
+                id: item.id,
+                status: 3
+              }
+            })
+    
+            const valAsJson = JSON.stringify({'task' : item.value.task, 'date' : item.value.date, 'status' : 3});
+    
+            await AsyncStorage.setItem(`${item.id}`, valAsJson);
+          }
+        }
+    }
+
+    statusChanger();
+  },[])
+
 
     //const dynamicStyle = navigation.canGoBack() ? 
     //  {justifyContent : 'space-between'} : {justifyContent : 'flex-end'};
@@ -51,6 +77,7 @@ const DisplayTasksScreen = ({navigation}) => {
         // console.log(item, typeof(item));
         let now = new Date().setHours(0,0,0,0);
         let itemDate = item.value.date;
+
         if (currRenderingDate != itemDate && (new Date(itemDate) < now)) {
           currRenderingDate = item.value.date;
           pastTasks++;
@@ -63,9 +90,10 @@ const DisplayTasksScreen = ({navigation}) => {
         } 
         else if (currRenderingDate == itemDate) {
           pastTasks++;
-        return (
-          <DisplayTasks backScreen={'To-Do'} key={item.id} task={item.value.task} id={item.id} navigation={navigation} isLong={0} day={item.value.date}/>
-        );}
+          return (
+            <DisplayTasks backScreen={'To-Do'} key={item.id} task={item.value.task} id={item.id} navigation={navigation} isLong={0} day={item.value.date}/>
+          )
+        }
       })}
       </buttonPropsContext.Provider>
       </ScrollView>
