@@ -32,6 +32,14 @@ const TaskStatus = ({navigation, route}) => {
       }
     })
 
+    dispatch({
+      type: "longTermTaskStatusUpdated",
+      payload: {
+        id : taskId,
+        status : selectedValue
+      }
+    })
+
     // async storage update
     const updateAsyncStorage = async () => {
       try {

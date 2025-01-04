@@ -19,7 +19,7 @@ const AboutScreen = ({navigation}) => {
           <ThreeDots customName={'See History'} customName2={"Long Term Tasks"} customName3={"Today Tasks"} customName4={"Sheduled Tasks"} navigation={navigation}/>
         </View>
       <Text style={styles.about_topics}>Released Version:</Text>
-      <Text style={styles.about_text}>v 2.0.1</Text>
+      <Text style={styles.about_text}>v 2.0.2</Text>
     </SafeAreaView>
   )
 }
